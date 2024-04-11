@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4de69577-3992-4b6b-a1dd-0f31b359b9b1" name="Changes" comment="commit to pages">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/BoulderingSession-WTkTVEdG.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/index-C-6OSxU3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/index-DN8Fr2TJ.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/jsconfig.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/base.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/main.css" beforeDir="false" />
@@ -56,7 +55,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "gh-pages",
+    "git-widget-placeholder": "Merging gh-pages",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",

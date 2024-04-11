@@ -1,11 +1,10 @@
 @import './base.css';
 
 body{
-    height: 800px;
-    display:flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
+    font-weight: var(--font-weight-body) !important;
+    color: var(--text) !important;
+    background-color: var(--background);
+    color: var(--text);
     font-family: var(--font-family) !important;
 
 }

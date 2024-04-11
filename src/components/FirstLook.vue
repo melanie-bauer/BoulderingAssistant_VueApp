@@ -17,7 +17,7 @@ a {
 }
 
 .gradient {
-  min-height: 40%;
+  min-height: 200px;
   padding: 0 15px 0 15px;
   background: radial-gradient(at right center, #E8D5B0FF 0%, rgb(182, 167, 172) 4%, rgba(96, 88, 163, 1) 26%,
   var(--background) 57%);

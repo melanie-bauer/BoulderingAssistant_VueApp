@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "deploy": "npm run build && git checkout -B gh-pages && move dist\\assets .\\ && move dist\\* .\\ && git add -f assets && git add -f index.html && git commit -m \"Deploy\" && git subtree push origin gh-pages",
+    "deploy": "npm run build && git checkout -B gh-pages && move dist\\assets .\\ && move dist\\* .\\ && git add -f assets && git add -f index.html && git commit -m \"Deploy\" && git push origin gh-pages --prefix assets && git push origin gh-pages:index.html",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"

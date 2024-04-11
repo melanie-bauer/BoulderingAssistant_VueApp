@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400..800&family=NTR&display=swap');
+:root {
+  --font-family: 'NTR', sans-serif;
+  --font-weight-heading: 600;
+  --font-weight-body: 400;
+
+  --line-height-display: 42px;
+  --line-height-header: 28px;
+  --line-height-body: 20px;
+  --line-height-label: 16px;
+
+  --letter-spacing-display: 1.8px;
+  --letter-spacing-header: 2px;
+  --letter-spacing-body: 1px;
+  --letter-spacing-label: 1px;
+
+  --spacing-sm: 12px;
+  --spacing-m: 24px;
+  --spacing-xl: 32px;
+
+  --font-size-base: 16px;
+  --display-xl: 48px;
+  --display-r: 40px;
+  --header-xl: 32px;
+  --header-r: 24px;
+  --header-sm: 20px;
+  --label-r: 12px;
+  --button-radius: 20px;
+  @media (prefers-color-scheme: light) {
+    --text: #04040b;
+    --background: #fbfbfe;
+    --primary: #534b95;
+    --secondary: #9890df;
+    --accent: #E8D5B0FF;
+  }
+
+      --text: #f4f4fb;
+      --background: #010104;
+      --primary: #716ab4;
+      --secondary: #28206f;
+      --accent: #E8D5B0FF;
+}

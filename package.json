@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "deploy": "npm run build && git checkout -B gh-pages && git add -f dist/. && git commit -m \"Deploy\" && git push --prefix dist origin gh-pages",
+    "deploy": "npm run build && git checkout -B gh-pages",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"

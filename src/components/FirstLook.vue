@@ -5,20 +5,30 @@ import {RouterLink} from 'vue-router'
 <template>
   <div class="gradient container d-flex flex-column justify-content-center">
     <h1 class="col-6">Bouldering Assistant</h1>
-    <p class="col-10 label">Your digital assistant to help visually impaired people with bouldering.</p>
-    <RouterLink class="btn btn-primary text" to="/boulderingSession">Get started <b>NOW</b></RouterLink>
+    <p class="col-11">Your digital assistant to help visually impaired people with bouldering.</p>
+
   </div>
+  <div class="container d-flex align-content-center">
+    <RouterLink class="btn btn-primary " to="/boulderingSession">Get started <b>NOW</b></RouterLink>
+  </div>
+
 </template>
 
 <style scoped>
 a {
   max-width: fit-content;
-  margin-top: var(--spacing-sm);
+  font-size: var(--header-r);
 }
 
+p{
+  font-size: 18px !important;
+  line-height: 26px !important;
+  letter-spacing: var(--letter-spacing-body);
+  hyphens: auto;
+}
 .gradient {
+  padding: 65px 15px 25px 15px;
   min-height: 200px;
-  padding: 0 15px 0 15px;
   background: radial-gradient(at right center, #E8D5B0FF 0%, rgb(182, 167, 172) 4%, rgba(96, 88, 163, 1) 26%,
   var(--background) 57%);
 }

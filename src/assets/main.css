@@ -8,11 +8,16 @@ body{
     font-family: var(--font-family) !important;
 
 }
-
-h4, h5, h6{
+.h4, .h5, .h6{
     font-weight: var(--font-weight-heading) !important;
     line-height: var(--line-height-header) !important;
     font-size: var(--header-sm) !important;
+    letter-spacing: var(--letter-spacing-header);
+}
+h4, h5, h6{
+    font-weight: var(--font-weight-heading) !important;
+    line-height: var(--line-height-header) !important;
+    font-size: var(--header-r) !important;
     letter-spacing: var(--letter-spacing-header);
 }
 
@@ -20,7 +25,7 @@ h1, h2, h3{
     font-weight: var(--font-weight-heading) !important;
     line-height: var(--line-height-display) !important;
     letter-spacing: var(--letter-spacing-display);
-    font-size: var(--display-r) !important;
+    font-size: var(--display-xl) !important;
 }
 .label
 {
@@ -33,16 +38,16 @@ h1, h2, h3{
     font-size: var(--font-size-base) !important;
     line-height: var(--line-height-body) !important;
     letter-spacing: var(--letter-spacing-body);
-
+    hyphens: auto;
 }
 .btn{
-    padding: 5px 10px 3px 9px !important;
+    padding: 3px 10px 1px 9px !important;
     box-shadow: 0 10px 20px -5px var(--primary);
 }
 .btn-primary {
     --bs-btn-color: #fff !important;
-    --bs-btn-bg: var(--secondary)!important;
-    --bs-btn-border-color: var(--secondary)!important;
+    --bs-btn-bg: var(--primary)!important;
+    --bs-btn-border-color: var(--primary)!important;
     --bs-btn-hover-color: #fff!important;
     --bs-btn-hover-bg: var(--primary)!important;
     --bs-btn-hover-border-color: var(--primary)!important;

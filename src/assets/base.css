@@ -6,7 +6,7 @@
 
   --line-height-display: 42px;
   --line-height-header: 28px;
-  --line-height-body: 20px;
+  --line-height-body: 22px;
   --line-height-label: 16px;
 
   --letter-spacing-display: 1.8px;
@@ -18,13 +18,13 @@
   --spacing-m: 24px;
   --spacing-xl: 32px;
 
-  --font-size-base: 16px;
+  --font-size-base: 17px;
   --display-xl: 48px;
   --display-r: 40px;
   --header-xl: 32px;
   --header-r: 24px;
   --header-sm: 20px;
-  --label-r: 12px;
+  --label-r: 15px;
   --button-radius: 20px;
   @media (prefers-color-scheme: light) {
     --text: #04040b;

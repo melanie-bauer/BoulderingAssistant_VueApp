@@ -1,24 +1,22 @@
 <script setup>
 import {RouterLink} from 'vue-router'
+import PrimaryButton from "../components/PrimaryButton.vue";
 </script>
 
 <template>
-  <div class="gradient container d-flex flex-column justify-content-center">
+  <div class="gradient container d-flex flex-column">
     <h1 class="col-6">Bouldering Assistant</h1>
     <p class="col-11">Your digital assistant to help visually impaired people with bouldering.</p>
 
   </div>
   <div class="container d-flex align-content-center">
-    <RouterLink class="btn btn-primary " to="/boulderingSession">Get started <b>NOW</b></RouterLink>
+    <PrimaryButton to="/boulderingSession">Get started <b>NOW</b></PrimaryButton>
   </div>
 
 </template>
 
 <style scoped>
-a {
-  max-width: fit-content;
-  font-size: var(--header-r);
-}
+
 
 p{
   font-size: 18px !important;

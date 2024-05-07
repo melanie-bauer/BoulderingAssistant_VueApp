@@ -2,9 +2,7 @@
 import {RouterLink} from "vue-router";
 </script>
 <template>
-  <div class="row">
-    <RouterLink to="/"><img id="home-img" src="../assets/images/home.png"></RouterLink>
-  </div>
+    <RouterLink class="home-button" to="/"><img id="home-img" src="../assets/images/home.png"></RouterLink>
 </template>
 <style>
 #home-img {
@@ -13,4 +11,16 @@ import {RouterLink} from "vue-router";
   max-width: 40px;
 
 }
+.home-button {
+   position: absolute;
+   top: 20px; /* Adjust the top position as needed */
+   left: 20px; /* Adjust the left position as needed */
+   z-index: 100;
+ }
+@media (prefers-color-scheme: light)
+{
+
+  #home-img {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(26%) saturate(0%) hue-rotate(31deg) brightness(97%) contrast(101%);  }
+  }
 </style>

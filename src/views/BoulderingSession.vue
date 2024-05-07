@@ -1,26 +1,35 @@
 <script setup>
 import {RouterLink} from "vue-router";
 import HomeButton from "../components/HomeButton.vue";
+import PrimaryButton from "../components/PrimaryButton.vue";
 </script>
 
 <template>
-
-  <div class="container">
-    <HomeButton />
-    <div class="row">
+  <HomeButton />
+  <div class="container d-flex flex-column justify-content-between">
+    <div class="text-center mt-5">
+      <label class="form-label text">Enter Person's Height</label>
       <input class="form-control form-control-lg" type="text" placeholder="Height in cm" aria-label=".form-control-lg example">
-      <RouterLink to="/connectRaspi" class="btn btn-primary">Start Session</RouterLink>
+    </div>
+    <div class="text-center">
+      <PrimaryButton to="/connectRaspi" width="80%" fontSize="35px">Start Session</PrimaryButton>
     </div>
   </div>
 </template>
 
 <style scoped>
-
-.container{
-  min-height: 100vh !important;
-  max-height: 100vh;
-  padding: 15px !important;
-  overflow: hidden;
+.text {
+  font-size: 25px !important;
 }
 
+input {
+  max-height: 40px;
+}
+
+.container {
+  min-height: 100vh !important;
+  max-height: 100vh;
+  padding: 75px 15px 40px 15px !important;
+  overflow: hidden;
+}
 </style>

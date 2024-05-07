@@ -1,0 +1,1 @@
+import{o as e,c as t,a as o,w as s,u as a,R as c,b as r}from "./index-UPvUf5th.js";const _="/deploy-vue-vite-app/assets/home-DQtWHZh5.png",n={class:"row"},i=r("img",{id:"home-img",src:_},null,-1),l={__name:"HomeButton",setup(m){return(p, u)=>(e(),t("div",n,[o(a(c),{to:"/"},{default:s(()=>[i]),_:1})]))}};export{l as _};

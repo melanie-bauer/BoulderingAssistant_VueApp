@@ -12,12 +12,15 @@ import PrimaryButton from "../components/PrimaryButton.vue";
       <input class="form-control form-control-lg" type="text" placeholder="Height in cm" aria-label=".form-control-lg example">
     </div>
     <div class="text-center">
-      <PrimaryButton to="/connectRaspi" width="80%" fontSize="35px">Start Session</PrimaryButton>
+      <PrimaryButton id="startButton" to="/connectRaspi" width="80%" fontSize="35px">Start Session</PrimaryButton>
     </div>
   </div>
 </template>
 
 <style scoped>
+#startButton{
+  margin-bottom: 50px;
+}
 .text {
   font-size: 25px !important;
 }

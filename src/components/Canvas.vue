@@ -16,7 +16,7 @@
         @touchstart="startDrag($event, key)"
     ></div>
     <div
-        v-if="displayHead"
+        v-if=displayHead
         id="Head"
         :style="{
         top: points.Head.y - headSize / 2 + 'px',
@@ -59,7 +59,6 @@ async function fetchData() {
       acc[point.id] = point;
       return acc;
     }, {}));
-    drawStickman(points);
     displayHead = true;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -180,12 +179,15 @@ onMounted(() => {
   }
 });
 
-const drawVideoFrame = () => {
+function drawVideoFrame() {
   const context = canvas.value.getContext('2d');
   context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
-  drawStickman(points);
+  fetchData();
+  if (points && Object.keys(points).length > 1) {
+    drawStickman(points);
+  }
   requestAnimationFrame(drawVideoFrame);
-};
+}
 
 onBeforeUnmount(() => {
   if (mediaStream) {

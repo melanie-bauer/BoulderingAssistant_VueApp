@@ -16,7 +16,7 @@
         @touchstart="startDrag($event, key)"
     ></div>
     <div
-        v-if=displayHead
+        v-if="displayHead"
         id="Head"
         :style="{
         top: points.Head.y - headSize / 2 + 'px',
@@ -30,9 +30,8 @@
   </div>
 </template>
 
-
 <script setup>
-import {ref, reactive, onMounted, computed, onBeforeUnmount} from 'vue';
+import { ref, reactive, onMounted, computed, onBeforeUnmount } from 'vue';
 
 const canvas = ref(null);
 const isDragging = ref(false);
@@ -48,18 +47,23 @@ const filteredPoints = computed(() => {
   const allowedKeys = ['Head', 'item'];
   return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
 });
-let displayHead = false;
+
+const displayHead = ref(false);
 const video = ref();
 let mediaStream;
+
 async function fetchData() {
   try {
     const response = await fetch('http://localhost:3000/points');
     const data = await response.json();
-    Object.assign(points, data.reduce((acc, point) => {
-      acc[point.id] = point;
-      return acc;
-    }, {}));
-    displayHead = true;
+    if (!isDragging.value) {
+      Object.assign(points, data.reduce((acc, point) => {
+        acc[point.id] = point;
+        return acc;
+      }, {}));
+      drawStickman(points);
+      displayHead.value = true;
+    }
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -73,29 +77,34 @@ function drawStickman(points) {
 
   ctx.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
 
-  // Then draw the stickman and other elements
   ctx.beginPath();
-  // Draw the body
-  ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
-  ctx.lineTo(points.Hip.x, points.Hip.y);
-  // Left leg
-  ctx.lineTo(points.LK.x, points.LK.y);
-  ctx.lineTo(points.LF.x, points.LF.y);
-  // Right leg
-  ctx.moveTo(points.Hip.x, points.Hip.y);
-  ctx.lineTo(points.RK.x, points.RK.y);
-  ctx.lineTo(points.RF.x, points.RF.y);
-  // Left arm
-  ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
-  ctx.lineTo(points.LE.x, points.LE.y);
-  ctx.lineTo(points.LH.x, points.LH.y);
-  // Right arm
-  ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
-  ctx.lineTo(points.RE.x, points.RE.y);
-  ctx.lineTo(points.RH.x, points.RH.y);
-  // Head
-  ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
-  ctx.lineTo(points.Head.x, points.Head.y);
+  if (points.Shoulders && points.Hip) {
+    ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
+    ctx.lineTo(points.Hip.x, points.Hip.y);
+  }
+  if (points.LK && points.LF) {
+    ctx.lineTo(points.LK.x, points.LK.y);
+    ctx.lineTo(points.LF.x, points.LF.y);
+  }
+  if (points.RK && points.RF) {
+    ctx.moveTo(points.Hip.x, points.Hip.y);
+    ctx.lineTo(points.RK.x, points.RK.y);
+    ctx.lineTo(points.RF.x, points.RF.y);
+  }
+  if (points.LE && points.LH) {
+    ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
+    ctx.lineTo(points.LE.x, points.LE.y);
+    ctx.lineTo(points.LH.x, points.LH.y);
+  }
+  if (points.RE && points.RH) {
+    ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
+    ctx.lineTo(points.RE.x, points.RE.y);
+    ctx.lineTo(points.RH.x, points.RH.y);
+  }
+  if (points.Head) {
+    ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
+    ctx.lineTo(points.Head.x, points.Head.y);
+  }
 
   ctx.strokeStyle = 'white';
   ctx.stroke();
@@ -135,7 +144,7 @@ async function endDrag() {
   document.removeEventListener('mouseup', endDrag);
   document.removeEventListener('touchmove', drag);
   document.removeEventListener('touchend', endDrag);
-  // Update backend
+
   const key = currentPoint.value;
   try {
     const response = await fetch(`http://localhost:3000/points/${key}`, {
@@ -157,21 +166,22 @@ onMounted(() => {
   canvas.value = document.getElementById('canvas');
   video.value = document.getElementById('video');
   fetchData();
-  setInterval(fetchData, 1000); // Fetch data every second
+  setInterval(fetchData, 3000); // Fetch data every 3 seconds
   canvas.value.width = window.innerWidth;
   canvas.value.height = window.innerHeight;
 
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: {
-      facingMode: { ideal : "environment"}
-      }, audio: false })
-        .then(function(stream) {
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } },
+      audio: false
+    })
+        .then(stream => {
           mediaStream = stream;
           video.value.srcObject = stream;
           video.value.play();
           drawVideoFrame();
         })
-        .catch(function(err) {
+        .catch(err => {
           console.error("Error accessing media devices.", err);
         });
   } else {
@@ -182,7 +192,6 @@ onMounted(() => {
 function drawVideoFrame() {
   const context = canvas.value.getContext('2d');
   context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
-  fetchData();
   if (points && Object.keys(points).length > 1) {
     drawStickman(points);
   }
@@ -196,7 +205,6 @@ onBeforeUnmount(() => {
     });
   }
 });
-
 </script>
 
 <style scoped>

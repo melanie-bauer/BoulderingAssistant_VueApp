@@ -16,7 +16,7 @@
         @touchstart="startDrag($event, key)"
     ></div>
     <div
-        v-if="points"
+        v-if="displayHead"
         id="Head"
         :style="{
         top: points.Head.y - headSize / 2 + 'px',
@@ -48,7 +48,7 @@ const filteredPoints = computed(() => {
   const allowedKeys = ['Head', 'item'];
   return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
 });
-
+let displayHead = false;
 const video = ref();
 let mediaStream;
 async function fetchData() {
@@ -60,6 +60,7 @@ async function fetchData() {
       return acc;
     }, {}));
     drawStickman(points);
+    displayHead = true;
   } catch (error) {
     console.error('Error fetching data:', error);
   }

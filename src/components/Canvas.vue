@@ -1,13 +1,14 @@
 <template>
   <div id="container">
+    <video id="video" autoplay style="display:none;"></video>
     <canvas id="canvas" ref="canvas"></canvas>
     <div
         v-for="(point, key) in filteredPoints"
         :id="key"
         :key="key"
         :style="{
-        top: point.y-pointSize / 2 + 'px',
-        left: point.x-pointSize/2 + 'px',
+        top: point.y - pointSize / 2 + 'px',
+        left: point.x - pointSize / 2 + 'px',
       }"
         class="point"
         draggable="true"
@@ -16,7 +17,7 @@
     ></div>
     <div
         v-if="points"
-        id="'Head'"
+        id="Head"
         :style="{
         top: points.Head.y - headSize / 2 + 'px',
         left: points.Head.x - headSize / 2 + 'px',
@@ -29,17 +30,18 @@
   </div>
 </template>
 
+
 <script setup>
-import {ref, reactive, onMounted, computed} from 'vue';
+import {ref, reactive, onMounted, computed, onBeforeUnmount} from 'vue';
 
 const canvas = ref(null);
 const isDragging = ref(false);
 const currentPoint = ref(null);
-const offset = reactive({x: 0, y: 0});
+const offset = reactive({ x: 0, y: 0 });
 const pointSize = 20;
 const headSize = 60;
 const points = reactive({
-  "Head" : {id: "Head", x: 160, y:120}
+  "Head": { id: "Head", x: 160, y: 120 }
 });
 
 const filteredPoints = computed(() => {
@@ -47,6 +49,8 @@ const filteredPoints = computed(() => {
   return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
 });
 
+const video = ref();
+let mediaStream;
 async function fetchData() {
   try {
     const response = await fetch('http://localhost:3000/points');
@@ -67,21 +71,29 @@ function drawStickman(points) {
   if (!ctx) return;
   ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
 
+  ctx.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
+
+  // Then draw the stickman and other elements
   ctx.beginPath();
-  ctx.moveTo(points.Head.x + 25, points.Head.y);
+  // Draw the body
   ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
   ctx.lineTo(points.Hip.x, points.Hip.y);
+  // Left leg
   ctx.lineTo(points.LK.x, points.LK.y);
   ctx.lineTo(points.LF.x, points.LF.y);
+  // Right leg
   ctx.moveTo(points.Hip.x, points.Hip.y);
   ctx.lineTo(points.RK.x, points.RK.y);
   ctx.lineTo(points.RF.x, points.RF.y);
+  // Left arm
   ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
   ctx.lineTo(points.LE.x, points.LE.y);
   ctx.lineTo(points.LH.x, points.LH.y);
+  // Right arm
   ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
   ctx.lineTo(points.RE.x, points.RE.y);
   ctx.lineTo(points.RH.x, points.RH.y);
+  // Head
   ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
   ctx.lineTo(points.Head.x, points.Head.y);
 
@@ -100,14 +112,10 @@ function startDrag(event, key) {
   offset.y = clientY - points[key].y;
   if (event.type === 'mousedown') {
     document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', () =>{
-      endDrag(key)
-    });
+    document.addEventListener('mouseup', endDrag);
   } else if (event.type === 'touchstart') {
     document.addEventListener('touchmove', drag);
-    document.addEventListener('touchend', () =>{
-      endDrag(key)
-    });
+    document.addEventListener('touchend', endDrag);
   }
 }
 
@@ -121,14 +129,14 @@ function drag(event) {
   drawStickman(points);
 }
 
-async function endDrag(key) {
+async function endDrag() {
   isDragging.value = false;
   document.removeEventListener('mousemove', drag);
   document.removeEventListener('mouseup', endDrag);
   document.removeEventListener('touchmove', drag);
   document.removeEventListener('touchend', endDrag);
   // Update backend
-
+  const key = currentPoint.value;
   try {
     const response = await fetch(`http://localhost:3000/points/${key}`, {
       method: 'PATCH',
@@ -147,16 +155,48 @@ async function endDrag(key) {
 
 onMounted(() => {
   canvas.value = document.getElementById('canvas');
+  video.value = document.getElementById('video');
   fetchData();
   setInterval(fetchData, 1000); // Fetch data every second
   canvas.value.width = window.innerWidth;
   canvas.value.height = window.innerHeight;
+
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: {
+      facingMode: { ideal : "environment"}
+      }, audio: false })
+        .then(function(stream) {
+          mediaStream = stream;
+          video.value.srcObject = stream;
+          video.value.play();
+          drawVideoFrame();
+        })
+        .catch(function(err) {
+          console.error("Error accessing media devices.", err);
+        });
+  } else {
+    console.error("getUserMedia not supported in this browser.");
+  }
 });
+
+const drawVideoFrame = () => {
+  const context = canvas.value.getContext('2d');
+  context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
+  drawStickman(points);
+  requestAnimationFrame(drawVideoFrame);
+};
+
+onBeforeUnmount(() => {
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
+});
+
 </script>
 
 <style scoped>
-
-
 #canvas {
   position: absolute;
   top: 0;
@@ -174,6 +214,7 @@ onMounted(() => {
   border-radius: 50%;
   cursor: pointer;
 }
+
 .head {
   width: 60px;
   height: 60px;

@@ -150,7 +150,7 @@ function getDifferenceHolds(limb)
     <p id="timer" class="overlay ">{{elapsedTime}}</p>
     <Canvas
         :show-fixed-position-button="showFixedPositionButton"></Canvas>
-    <HomeButton @click=""/>
+    <HomeButton/>
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <PrimaryButton
           v-if="showFixedPositionButton"
@@ -192,7 +192,7 @@ function getDifferenceHolds(limb)
   padding: 0 5% 0 5%;
 }
 .overlay{
-  z-index: 1000;
+  z-index: 10;
   position: relative;
 }
 #reverseButton {

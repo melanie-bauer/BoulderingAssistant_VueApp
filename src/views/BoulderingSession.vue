@@ -2,6 +2,7 @@
 import {ref} from "vue";
 
 export const elapsedTime = ref('');
+export const timerInterval = ref();
 </script>
 <script setup>
 import { ref } from "vue";
@@ -10,7 +11,7 @@ import HomeButton from "../components/HomeButton.vue";
 const personHeight = ref('');
 const showError = ref(true);
 const startTime = ref();
-const timerInterval = ref();
+
 async function validateInput() {
   const height = parseInt(personHeight.value);
   showError.value = isNaN(height) || height < 30 || height > 230;
@@ -33,8 +34,12 @@ async function validateInput() {
 }
 function startTiming()
 {
+  if(timerInterval.value){
+    clearInterval(timerInterval.value);
+  }
   startTime.value = Date.now();
   timerInterval.value = setInterval(updateTimer, 1000);
+  elapsedTime.value = '00:00';
 }
 function updateTimer() {
   elapsedTime.value = '';
@@ -98,7 +103,7 @@ input {
 .container {
   min-height: 100vh !important;
   max-height: 100vh;
-  padding: 75px 15px 40px 15px !important;
+  padding: 75px 15px 75px 15px !important;
   overflow: hidden;
 }
 </style>

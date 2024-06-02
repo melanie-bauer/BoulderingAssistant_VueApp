@@ -21,7 +21,7 @@
   const points = reactive({
     "Head": { id: "Head", x: 160, y: 120 }
   });
-
+const fetchDataInterval = ref();
   const filteredPoints = computed(() => {
     const allowedKeys = ['Head', 'item'];
     return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
@@ -176,7 +176,7 @@
     canvas.value = document.getElementById('canvas');
     video.value = document.getElementById('video');
     fetchData();
-    setInterval(fetchData, 3000); // Fetch data every 3 seconds
+    fetchDataInterval.value = setInterval(fetchData, 3000);
 
     eventbus.on('reset-draggable-limbs', async (oldPoints) => {
 
@@ -217,10 +217,18 @@
     } else {
       console.error("getUserMedia not supported in this browser.");
     }
-    onUnmounted(() => {
-    });
-  });
 
+  });
+  onBeforeUnmount(() => {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => {
+        track.stop();
+      });
+    }
+    if(fetchDataInterval.value) {
+      clearInterval(fetchDataInterval.value);
+    }
+  });
   function drawVideoFrame() {
     const context = canvas.value.getContext('2d');
     context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
@@ -230,13 +238,7 @@
     requestAnimationFrame(drawVideoFrame);
   }
 
-  onBeforeUnmount(() => {
-    if (mediaStream) {
-      mediaStream.getTracks().forEach(track => {
-        track.stop();
-      });
-    }
-  });
+
   </script>
 
   <template>

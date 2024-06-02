@@ -116,7 +116,14 @@ function getClockDirection(limb) {
   {
     direction = 90 + direction;
   }
-  const clockTime = clockTimes.find(time => direction >= time.min && direction < time.max);
+  let clockTime;
+  if(direction >= 345 || direction < 15)
+  {
+    clockTime = clockTimes[0];
+  }
+  else {
+    clockTime = clockTimes.find(time => direction >= time.min && direction < time.max);
+  }
   return clockTime ? clockTime.time : "";
 }
 function getDifferenceHolds(limb)

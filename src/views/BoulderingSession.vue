@@ -27,6 +27,7 @@ export async function startTiming()
   }
   updateTimer();
   timerInterval.value = setInterval(updateTimer, 1000);
+
 }
 async function updateTimer() {
   elapsedTime.value = '';

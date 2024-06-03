@@ -1,11 +1,12 @@
 <script setup>
-import HomeButton from "../components/HomeButton.vue";
+import ButtonLink from "../components/ButtonLink.vue";
 import { draggableLimbs } from "../components/Canvas.vue";
 import Canvas from "../components/Canvas.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import { eventbus } from '../components/Eventbus.js';
-import { elapsedTime } from "./BoulderingSession.vue";
+import {elapsedTime, startTime, startTiming} from "./BoulderingSession.vue";
+
 
 const showFixedPositionButton = ref(true);
 const oldPosition = ref({});
@@ -149,15 +150,29 @@ function getDifferenceHolds(limb)
   console.log(differenceHandle);
   return differenceHandle;
 }
-
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:3000/startTime/startTime');
+    const data = await response.json();
+    startTime.value = data.value;
+      await startTiming();
+  } catch (error) {
+    console.error('Error updating personHeight:', error);
+  }
+})
 </script>
 
 <template>
   <div class="container d-flex flex-column justify-content-between">
-    <p id="timer" class="overlay ">{{elapsedTime}}</p>
+    <p v-if="elapsedTime"  class="overlay timer">{{elapsedTime}}</p>
+    <p v-else class="overlay timer">00:00</p>
     <Canvas
         :show-fixed-position-button="showFixedPositionButton"></Canvas>
-    <HomeButton/>
+    <ButtonLink
+    to="/overview"
+    img-src="/deploy-vue-vite-app/src/assets/images/back-arrow.png"
+    top-distance="27px">
+    </ButtonLink>
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <PrimaryButton
           v-if="showFixedPositionButton"
@@ -191,7 +206,8 @@ function getDifferenceHolds(limb)
 
 
 <style scoped>
-#timer{
+
+.timer{
  font-size: 50px;
   text-align: center;
 }

@@ -1,6 +1,6 @@
 <template>
   <router-link
-      :to="to "
+      :to="to"
       :style="{ width: width, fontSize: fontSize }"
       class="btn btn-primary"
   >

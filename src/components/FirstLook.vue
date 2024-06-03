@@ -10,7 +10,7 @@ import PrimaryButton from "../components/PrimaryButton.vue";
 
   </div>
   <div class="container d-flex align-content-center">
-    <PrimaryButton to="/boulderingSession">Get started <b>NOW</b></PrimaryButton>
+    <PrimaryButton to="/boulderingSession" width="70%" font-size="24px">Get started <b>NOW</b></PrimaryButton>
   </div>
 
 </template>

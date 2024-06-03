@@ -1,16 +1,54 @@
 <script>
 import {ref} from "vue";
 
-export const elapsedTime = ref('');
+export const elapsedTime = ref('00:00');
 export const timerInterval = ref();
+export const startTime = ref(0);
+
+export async function startTiming()
+{
+  if(timerInterval.value){
+    clearInterval(timerInterval.value);
+  }
+  if(startTime.value == 0) {
+    startTime.value = Date.now();
+    try {
+      const response = await fetch( 'http://localhost:3000/startTime/startTime', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({value: startTime.value})
+      });
+
+    } catch (error) {
+      console.error('Error updating startTime:', error);
+    }
+  }
+  updateTimer();
+  timerInterval.value = setInterval(updateTimer, 1000);
+}
+async function updateTimer() {
+  elapsedTime.value = '';
+  const elapsedTimeMs = Date.now() - startTime.value;
+  let seconds = Math.floor(elapsedTimeMs / 1000);
+  if(seconds / 3600 >= 1)
+  {
+    elapsedTime.value += `${Math.floor(seconds/3600)}:`
+    seconds = seconds % 3600;
+  }
+
+  elapsedTime.value += `${String(Math.floor(seconds/60)).padStart(2, '0')}:`;
+  seconds = seconds % 60;
+  elapsedTime.value += String(seconds).padStart(2, '0')
+}
 </script>
 <script setup>
-import { ref } from "vue";
-import HomeButton from "../components/HomeButton.vue";
-
+import {onMounted, ref} from "vue";
+import ButtonLink from "../components/ButtonLink.vue";
 const personHeight = ref('');
 const showError = ref(true);
-const startTime = ref();
+
 
 async function validateInput() {
   const height = parseInt(personHeight.value);
@@ -24,43 +62,18 @@ async function validateInput() {
         },
         body: JSON.stringify({value: height})
       });
-      if (!response.ok) {
-        console.error('Failed to save height');
-      }
+
     } catch (error) {
       console.error('Error updating personHeight:', error);
     }
   }
 }
-function startTiming()
-{
-  if(timerInterval.value){
-    clearInterval(timerInterval.value);
-  }
-  startTime.value = Date.now();
-  timerInterval.value = setInterval(updateTimer, 1000);
-  elapsedTime.value = '00:00';
-}
-function updateTimer() {
-  elapsedTime.value = '';
-  const elapsedTimeMs = Date.now() - startTime.value;
-  let seconds = Math.floor(elapsedTimeMs / 1000);
-  if(seconds / 3600 >= 1)
-  {
-    elapsedTime.value += `${Math.floor(seconds/3600)}:`
-    seconds = seconds % 3600;
-  }
 
-  elapsedTime.value += `${String(Math.floor(seconds/60)).padStart(2, '0')}:`;
-  seconds = seconds % 60;
-  elapsedTime.value += String(seconds).padStart(2, '0')
-  console.log(elapsedTime.value);
-}
 </script>
 
 
 <template>
-  <HomeButton/>
+  <ButtonLink to="/" imgSrc="/deploy-vue-vite-app/src/assets/images/home.png"/>
   <div class="container d-flex flex-column justify-content-between">
     <div class="text-center mt-5">
       <label class="form-label text">Enter Person's Height</label>

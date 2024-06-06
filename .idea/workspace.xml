@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afea20d4-0f7e-4727-8c33-544e4000252a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/server/db.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ButtonLink.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FirstLook.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PrimaryButton.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/BoulderingSession.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/GetNextHandle.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Overview.vue" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_05_2024_09_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_05_2024_09_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/BoulderingSession-DkaHIRaw.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/BoulderingSession-rgVRwHdY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/GetNextHandle-CdZzxmFA.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/GetNextHandle-CllEK8qM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Jacob_M.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Maximilian_M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Mbala_Elysee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Melanie_B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Overview-CyY3HbMY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Overview-DZel-8dl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/back-arrow-O9fH0CTM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/home-DQtWHZh5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/index-19D50LGG.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/index-B_KPzEZX.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/rotate-left-CxPc4Vuv.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "git-widget-placeholder": "gh-pages",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

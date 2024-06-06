@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import AboutUs from "../components/AboutUs.vue";
 
-const names = ["Melanie Bauer", "Mbala Elysee", "Jacob Mayrwoeger?", "Maximilian ? "];
+const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer "];
 const images = ["src/assets/images/Melanie_B.png", "src/assets/images/Mbala_Elysee.jpg", "src/assets/images/Jacob_M.jpg", "src/assets/images/Maximilian_M.png"];
 const index = ref(0);
 
@@ -17,22 +17,29 @@ const prev = () => {
 
 <template>
   <div class="container">
+    <div class="row small-mb">
+      <h1 class="text-align-center">About Us</h1>
+    </div>
+    <div>
     <button @click="prev" class="arrow left">
       <img src="@/assets/images/prev.png" alt="Previous">
     </button>
     <div class="image-wrapper">
-      <img :src="images[index]" alt="Image" class="main-image">
-      <p class="caption">{{ names[index] }}</p>
+      <img :src="images[index]" alt="Image" class="main-image img-fluid">
+
     </div>
     <button @click="next" class="arrow right">
       <img src="@/assets/images/next.png" alt="Next">
     </button>
+    </div>
+    <h4 class="caption ">{{ names[index] }}</h4>
   </div>
 </template>
 
 <style scoped>
 .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -46,12 +53,12 @@ svg {
 
 .image-wrapper {
   text-align: center;
-
 }
 
 .main-image {
   width: 300px;
-  height: auto;
+  min-height: 500px;
+  max-height: 500px;
   margin: 0 20px;
 }
 
@@ -64,7 +71,7 @@ svg {
   background-color: transparent;
   border: none;
   position: absolute;
-  top: 50%;
+  top: 47%;
   transform: translateY(-50%);
 }
 

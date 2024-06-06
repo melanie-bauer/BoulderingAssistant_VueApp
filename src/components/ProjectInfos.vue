@@ -1,8 +1,3 @@
-<script setup> 
-import AboutUs from "@/components/AboutUs.vue"
-</script>
-
-
 
 <template>
   <div class="container">
@@ -31,32 +26,21 @@ Our goal in developing the Bouldering Assistant was to promote inclusivity and a
 
     </span>
     </div>
-    
-    <div class="row small-mb">
-      <h4 class="colored-bot-b text-align-center">About Us</h4>
-    </div>
-    <div class="row col-11">
-        <span class="text large-mb text-align-right">
-          <AboutUs/>
-        </span>
-    </div>
+
 </div>
 </template>
 
 
-
-
 <style scoped>
+.container{
+  padding-bottom: 0 !important;
+}
 .text-align-right {
   text-align: right;
 }
 
 .text-align-justify {
   text-align: justify;
-}
-
-.text-align-center {
-  text-align: center;
 }
 
 h4 {

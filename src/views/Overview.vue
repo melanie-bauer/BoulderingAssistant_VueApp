@@ -1,6 +1,6 @@
 <script setup>
-import ButtonLink from '../components/ButtonLink.vue';
-import {elapsedTime, timerInterval, startTime, startTiming} from "./BoulderingSession.vue";
+import ButtonLink from '@/components/ButtonLink.vue';
+import {elapsedTime, timerInterval, startTime, startTiming} from "@/views/BoulderingSession.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 const personHeight = ref();

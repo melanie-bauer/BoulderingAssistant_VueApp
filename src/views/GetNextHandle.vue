@@ -1,11 +1,11 @@
 <script setup>
-import ButtonLink from "../components/ButtonLink.vue";
-import { draggableLimbs } from "../components/Canvas.vue";
-import Canvas from "../components/Canvas.vue";
-import PrimaryButton from "../components/PrimaryButton.vue";
+import ButtonLink from "@/components/ButtonLink.vue";
+import { draggableLimbs } from "@/components/Canvas.vue";
+import Canvas from "@/components/Canvas.vue";
+import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref, watch} from "vue";
-import { eventbus } from '../components/Eventbus.js';
-import {elapsedTime, startTime, startTiming} from "./BoulderingSession.vue";
+import { eventbus } from '@/components/Eventbus.js';
+import {elapsedTime, startTime, startTiming} from "@/views/BoulderingSession.vue";
 
 
 const showFixedPositionButton = ref(true);

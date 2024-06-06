@@ -46,7 +46,7 @@ async function updateTimer() {
 </script>
 <script setup>
 import {onMounted, ref} from "vue";
-import ButtonLink from "../components/ButtonLink.vue";
+import ButtonLink from "@/components/ButtonLink.vue";
 const personHeight = ref('');
 const showError = ref(true);
 

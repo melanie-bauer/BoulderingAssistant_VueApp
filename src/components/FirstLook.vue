@@ -1,6 +1,6 @@
 <script setup>
 import {RouterLink} from 'vue-router'
-import PrimaryButton from "../components/PrimaryButton.vue";
+import PrimaryButton from "@/components/PrimaryButton.vue";
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup>
-import ButtonLink from "@/components/ButtonLink.vue";
 import { draggableLimbs } from "@/components/Canvas.vue";
 import Canvas from "@/components/Canvas.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref, watch} from "vue";
 import { eventbus } from '@/components/Eventbus.js';
 import {elapsedTime, startTime, startTiming} from "@/views/BoulderingSession.vue";
+import {RouterLink} from "vue-router";
 
 
 const showFixedPositionButton = ref(true);
@@ -168,11 +168,10 @@ onMounted(async () => {
     <p v-else class="overlay timer">00:00</p>
     <Canvas
         :show-fixed-position-button="showFixedPositionButton"></Canvas>
-    <ButtonLink
-    to="/overview"
-    img-src="/deploy-vue-vite-app/src/assets/images/back-arrow.png"
-    top-distance="27px">
-    </ButtonLink>
+
+    <RouterLink  to="/overview" class="button d-flex align-items-center">
+      <img class="img" src="@/assets/images/back-arrow.png">
+    </RouterLink>
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <PrimaryButton
           v-if="showFixedPositionButton"
@@ -240,5 +239,22 @@ video {
   object-fit: cover;
 }
 
+.img {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(4%) saturate(0%) hue-rotate(31deg) brightness(107%) contrast(105%);
+  max-height: 40px;
+  max-width: 40px;
+  padding-bottom: 5px;
+  margin-right: 5px;
+}
 
+.button {
+  font-size: 32px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text);
+  position: absolute;
+  left: 20px;
+  top: 27px;
+  z-index: 100;
+}
 </style>

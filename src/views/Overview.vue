@@ -1,8 +1,8 @@
 <script setup>
-import ButtonLink from '@/components/ButtonLink.vue';
 import {elapsedTime, timerInterval, startTime, startTiming} from "@/views/BoulderingSession.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
+import {RouterLink} from "vue-router";
 const personHeight = ref();
 async function endSession() {
   clearInterval(timerInterval);
@@ -52,12 +52,11 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <ButtonLink
-      img-src="/deploy-vue-vite-app/src/assets/images/back-arrow.png"
-      to="/connectRaspi"
-      top-distance="27px">
+
+  <RouterLink  to="/connectRaspi" class="button d-flex align-items-center">
+    <img class="img" src="@/assets/images/back-arrow.png">
     Continue
-  </ButtonLink>
+  </RouterLink>
   <div class="container d-flex flex-column justify-content-around">
     <div>
       <h4>Time in current Session:</h4>
@@ -80,5 +79,23 @@ onMounted(async () => {
   max-height: 100vh;
   padding: 100px 30px 35px 30px !important;
   overflow: hidden;
+}
+.img {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(4%) saturate(0%) hue-rotate(31deg) brightness(107%) contrast(105%);
+  max-height: 40px;
+  max-width: 40px;
+  padding-bottom: 5px;
+  margin-right: 5px;
+}
+
+.button {
+  font-size: 32px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text);
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 100;
 }
 </style>

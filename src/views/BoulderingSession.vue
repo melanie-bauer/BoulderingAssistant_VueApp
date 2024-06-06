@@ -46,7 +46,7 @@ async function updateTimer() {
 </script>
 <script setup>
 import {onMounted, ref} from "vue";
-import ButtonLink from "@/components/ButtonLink.vue";
+import {RouterLink} from "vue-router";
 const personHeight = ref('');
 const showError = ref(true);
 
@@ -74,7 +74,9 @@ async function validateInput() {
 
 
 <template>
-  <ButtonLink to="/" imgSrc="/deploy-vue-vite-app/src/assets/images/home.png"/>
+  <RouterLink to="/" class="button d-flex align-items-center">
+    <img class="img" src="@/assets/images/home.png">
+  </RouterLink>
   <div class="container d-flex flex-column justify-content-between">
     <div class="text-center mt-5">
       <label class="form-label text">Enter Person's Height</label>
@@ -119,5 +121,23 @@ input {
   max-height: 100vh;
   padding: 75px 15px 75px 15px !important;
   overflow: hidden;
+}
+.img {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(4%) saturate(0%) hue-rotate(31deg) brightness(107%) contrast(105%);
+  max-height: 40px;
+  max-width: 40px;
+  padding-bottom: 5px;
+  margin-right: 5px;
+}
+
+.button {
+  font-size: 32px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text);
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 100;
 }
 </style>

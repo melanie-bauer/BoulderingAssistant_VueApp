@@ -36,8 +36,4 @@ export default {
   font-size: var(--header-r);
 }
 
-.disabled-link {
-  pointer-events: none;
-  opacity: 0.5;
-}
 </style>

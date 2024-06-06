@@ -1,6 +1,8 @@
-<script setup>
-
+<script setup> 
+import AboutUs from "@/components/AboutUs.vue"
 </script>
+
+
 
 <template>
   <div class="container">
@@ -27,9 +29,22 @@ The Bouldering Assistant utilizes a Raspberry Pi placed at the base. Through a d
       <span class="text large-mb text-align-justify">
 Our goal in developing the Bouldering Assistant was to promote inclusivity and accessibility in sports. By harnessing technology, we empower visually impaired individuals to participate in bouldering confidently and independently. This project not only fosters inclusivity within the climbing community but also showcases the transformative impact of technology on enhancing the lives of people with disabilities.
 
-    </span></div>
-  </div>
+    </span>
+    </div>
+    
+    <div class="row small-mb">
+      <h4 class="colored-bot-b text-align-center">About Us</h4>
+    </div>
+    <div class="row col-11">
+        <span class="text large-mb text-align-right">
+          <AboutUs/>
+        </span>
+    </div>
+</div>
 </template>
+
+
+
 
 <style scoped>
 .text-align-right {
@@ -38,6 +53,10 @@ Our goal in developing the Bouldering Assistant was to promote inclusivity and a
 
 .text-align-justify {
   text-align: justify;
+}
+
+.text-align-center {
+  text-align: center;
 }
 
 h4 {

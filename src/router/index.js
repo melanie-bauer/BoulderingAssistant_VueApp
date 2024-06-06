@@ -20,7 +20,13 @@ const router = createRouter({
     {
       path: '/connectRaspi',
       name: 'getRaspiConnection',
-      component: () => import('../views/ConnectToRaspi.vue')
+      component: () => import('../views/GetNextHandle.vue')
+    }
+    ,
+    {
+      path: '/overview',
+      name: 'Overview',
+      component: () => import('../views/Overview.vue')
     }
   ]
 })

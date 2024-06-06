@@ -18,3 +18,4 @@ export default defineConfig({
     outDir: 'dist' // Hier wird das Ausgabeverzeichnis für den Build-Prozess festgelegt
   }
 });
+

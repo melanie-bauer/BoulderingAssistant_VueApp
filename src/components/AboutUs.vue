@@ -56,9 +56,8 @@ svg {
 }
 
 .main-image {
-  width: 300px;
-  min-height: 500px;
-  max-height: 500px;
+  min-height: 60vh;
+  max-height: 60vh;
   margin: 0 20px;
 }
 
@@ -86,5 +85,10 @@ svg {
 
 .arrow.right {
   right: 1%;
+}
+@media (prefers-color-scheme: light) {
+  .arrow > img {
+    filter: brightness(0) saturate(100%);
+  }
 }
 </style>

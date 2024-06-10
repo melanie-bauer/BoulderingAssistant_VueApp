@@ -164,64 +164,61 @@ onMounted(async () => {
 
 <template>
   <div class="container d-flex flex-column justify-content-between">
-    <p v-if="elapsedTime"  class="overlay timer">{{elapsedTime}}</p>
+    <p v-if="elapsedTime" class="overlay timer">{{elapsedTime}}</p>
     <p v-else class="overlay timer">00:00</p>
-    <Canvas
-        :show-fixed-position-button="showFixedPositionButton"></Canvas>
-
-    <RouterLink  to="/overview" class="button d-flex align-items-center">
-      <img class="img" src="@/assets/images/back-arrow.png">
-    </RouterLink>
+    <div class="absolute-container overlay align-items-center" :style="{ justifyContent: showFixedPositionButton ? 'flex-start' : 'space-between' }">
+      <RouterLink to="/overview" class="button d-flex align-items-center">
+        <img class="img" src="@/assets/images/back-arrow.png" alt="back arrow">
+      </RouterLink>
+      <button type="button" id="reverseButton" class="btn btn-primary overlay mx-1" v-if="!showFixedPositionButton" @click="resetDraggableLimbs">
+        <img v-if="!showFixedPositionButton" width="30px" height="30px" src="../assets/images/rotate-left.png" alt="left rotating circle">
+      </button>
+    </div>
+    <Canvas :show-fixed-position-button="showFixedPositionButton"></Canvas>
     <div class="text-center row d-flex justify-content-center align-items-center padding">
-      <PrimaryButton
-          v-if="showFixedPositionButton"
-          id="confirmStickman"
-          class="overlay"
-          fontSize="24px"
-          to="/connectRaspi"
-          width="90%"
-          @click="confirmPosition">
+      <PrimaryButton v-if="showFixedPositionButton" id="confirmStickman" class="overlay" fontSize="30px" to="/connectRaspi" width="100%" @click="confirmPosition">
         confirm Stickman-Position
       </PrimaryButton>
-      <button type="button" id="reverseButton" class="btn btn-primary overlay mx-1"
-        v-if="!showFixedPositionButton"
-      @click="resetDraggableLimbs">
-        <img v-if="!showFixedPositionButton" width="20px" height="20px" src="../assets/images/rotate-left.png" alt="left rotating circle">
-      </button>
-      <PrimaryButton
-          v-if="!showFixedPositionButton"
-          id="confirmNextHandle"
-          class="overlay mx-1"
-          fontSize="22px"
-          to="/connectRaspi"
-          width="80%"
-          @click="confirmNextHandle">
-        confirm next Handl-Position
+      <PrimaryButton v-if="!showFixedPositionButton" id="confirmNextHandle" class="overlay mx-1" fontSize="30px" to="/connectRaspi" width="100%" @click="confirmNextHandle">
+        confirm next Handle
       </PrimaryButton>
     </div>
   </div>
-
 </template>
 
-
 <style scoped>
-
-.timer{
- font-size: 50px;
+.timer {
+  font-size: 50px;
   text-align: center;
+  color: white;
 }
-.padding{
+
+.padding {
   padding: 0 5% 0 5%;
 }
-.overlay{
+
+.overlay {
   z-index: 10;
   position: relative;
 }
+
+.absolute-container {
+  position: absolute;
+  top: 22px;
+  padding: 0 20px 0 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  min-height: 50px;
+}
+
 #reverseButton {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background-color: white;
 }
+
 .container {
   position: absolute;
   width: 100vw;
@@ -248,13 +245,11 @@ video {
 }
 
 .button {
+  padding-top: 5px;
+  min-height: 50px;
   font-size: 32px;
   font-weight: bold;
   text-decoration: none;
   color: var(--text);
-  position: absolute;
-  left: 20px;
-  top: 27px;
-  z-index: 100;
 }
 </style>

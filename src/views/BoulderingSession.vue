@@ -5,6 +5,11 @@ export const elapsedTime = ref('00:00');
 export const timerInterval = ref();
 export const startTime = ref(0);
 
+async function atButtonClick() {
+  await resetPoints();
+  await startTiming();
+}
+export const isDbUpdated = ref(false);
 export async function startTiming() {
   if (timerInterval.value) {
     clearInterval(timerInterval.value);
@@ -24,9 +29,54 @@ export async function startTiming() {
       console.error('Error updating startTime:', error);
     }
   }
-  updateTimer();
+  await updateTimer();
   timerInterval.value = setInterval(updateTimer, 1000);
 
+}
+
+const BODY_PROPORTIONS = {
+  Head: {y: 0.20, x: 0.5},        // Adjusted for the head to be slightly above the center
+  Shoulders: {y: 0.30, x: 0.5},   // Shoulders at about 25% from the top
+  Hip: {y: 0.50, x: 0.5},         // Hips at about 55% from the top
+  LH: {y: 0.5, x: 0.25},         // Left hand at 25% height, 25% width
+  RH: {y: 0.5, x: 0.75},         // Right hand at 25% height, 75% width
+  LE: {y: 0.40, x: 0.35},          // Left elbow at 40% height, 25% width
+  RE: {y: 0.40, x: 0.65},          // Right elbow at 40% height, 75% width
+  LK: {y: 0.65, x: 0.35},          // Left knee at 70% height, 25% width
+  RK: {y: 0.65, x: 0.65},          // Right knee at 70% height, 75% width
+  LF: {y: 0.8, x: 0.25},          // Left foot at 90% height, 25% width
+  RF: {y: 0.8, x: 0.75}           // Right foot at 90% height, 75% width
+};
+
+const points = ref([]);
+
+async function resetPoints() {
+  const height = window.innerHeight;
+  const width = window.innerWidth;
+
+  points.value = Object.keys(BODY_PROPORTIONS).map(key => ({
+    id: key,
+    x: width * BODY_PROPORTIONS[key].x,
+    y: height * BODY_PROPORTIONS[key].y
+  }));
+  await writePointsInDB()
+}
+
+async function writePointsInDB() {
+  for (let point of points.value) {
+    try {
+      const response = await fetch(`http://localhost:3000/points/${point.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(point)
+      });
+      isDbUpdated.value = true;
+    } catch (error) {
+      console.error('Error updating points:', error);
+    }
+  }
 }
 
 async function updateTimer() {
@@ -75,7 +125,7 @@ async function validateInput() {
 
 <template>
   <div class="absolute-container overlay align-items-center">
-    <RouterLink to="/" class="button d-flex align-items-center">
+    <RouterLink class="button d-flex align-items-center" to="/">
       <img class="img" src="@/assets/images/home.png">
     </RouterLink>
   </div>
@@ -83,7 +133,8 @@ async function validateInput() {
   <div class="container d-flex flex-column justify-content-between">
     <div class="text-center mt-5">
       <label class="form-label text">Enter Person's Height</label>
-      <input v-model="personHeight" aria-label=".form-control-lg example" class="form-control form-control-lg input my-3"
+      <input v-model="personHeight" aria-label=".form-control-lg example"
+             class="form-control form-control-lg input my-3"
              placeholder="Height in cm"
              type="text" @input="validateInput">
       <p v-if="showError" class="text-danger mt-1">Please enter a number between 30 and 230.</p>
@@ -91,16 +142,16 @@ async function validateInput() {
     <div class="text-center">
       <RouterLink
           v-if="!showError"
-          to="/connectRaspi"
           :style="{ width: '100%', fontSize: '30px'}"
           class="btn btn-primary"
-          @click="startTiming">
+          to="/connectRaspi"
+          @click="atButtonClick">
         Start Session
       </RouterLink>
       <button
           v-else
-          class="btn btn-primary"
-          :style="{ width: '100%', fontSize: '30px', opacity: 0.5 }">
+          :style="{ width: '100%', fontSize: '30px', opacity: 0.5 }"
+          class="btn btn-primary">
         Start Session
       </button>
     </div>
@@ -112,6 +163,7 @@ async function validateInput() {
   outline: none;
   box-shadow: 0 0 15px 5px var(--primary);
 }
+
 .absolute-container {
   position: absolute;
   top: 22px;
@@ -157,10 +209,12 @@ input {
   text-decoration: none;
   color: var(--text);
 }
+
 @media (prefers-color-scheme: light) {
-  .img{
+  .img {
     filter: brightness(0) saturate(100%);
   }
+
   .input:focus {
     box-shadow: 0 0 15px 5px var(--secondary);
 

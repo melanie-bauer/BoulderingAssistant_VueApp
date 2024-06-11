@@ -3,8 +3,10 @@
   export const draggableLimbs = ref(['Head', 'Shoulders', 'Hip', 'LE', 'RE', 'LK', 'RK', 'LF', 'RF', 'LH', 'RH']);
   </script>
   <script setup>
-  import {ref, reactive, onMounted, computed, onBeforeUnmount, watch, onUnmounted} from 'vue';
-  import { eventbus } from './Eventbus.js';
+  import {ref, reactive, onMounted, computed, onBeforeUnmount, watch} from 'vue';
+  import { eventbus } from '@/components/Eventbus.js';
+import {isDbUpdated} from "@/views/BoulderingSession.vue";
+
   const props = defineProps({
     showFixedPositionButton: {
       type: Boolean,
@@ -27,7 +29,7 @@ const fetchDataInterval = ref();
     return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
   });
 
-  const displayHead = ref(false);
+  const displayLimbs= ref(false);
   const video = ref();
   let mediaStream;
   watch(() => props.showFixedPositionButton, (newVal) => {
@@ -66,7 +68,7 @@ const fetchDataInterval = ref();
           return acc;
         }, {}));
         drawStickman(points);
-        displayHead.value = true;
+        displayLimbs.value = true;
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -175,7 +177,15 @@ const fetchDataInterval = ref();
   onMounted(() => {
     canvas.value = document.getElementById('canvas');
     video.value = document.getElementById('video');
-    fetchData();
+    if(isDbUpdated.value) {
+      fetchData();
+    }
+    else{
+      isDbUpdated.value = true;
+      setTimeout(() => {
+        fetchData()
+      }, 300);
+    }
     fetchDataInterval.value = setInterval(fetchData, 3000);
 
     eventbus.on('reset-draggable-limbs', async (oldPoints) => {
@@ -246,6 +256,7 @@ const fetchDataInterval = ref();
       <video id="video" autoplay style="display:none;"></video>
       <canvas id="canvas" ref="canvas"></canvas>
       <div
+          v-if="displayLimbs"
           v-for="(point, key) in filteredPoints"
           :id="key"
           :key="key"
@@ -259,7 +270,7 @@ const fetchDataInterval = ref();
           @touchstart="startDrag($event, key)"
       ></div>
       <div
-          v-if="displayHead"
+          v-if="displayLimbs"
           id="Head"
           :style="{
           top: points.Head.y - headSize / 2 + 'px',

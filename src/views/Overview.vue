@@ -1,5 +1,5 @@
 <script setup>
-import {elapsedTime, timerInterval, startTime, startTiming} from "@/views/BoulderingSession.vue";
+import {elapsedTime, timerInterval, startTime, startTiming, isDbUpdated} from "@/views/BoulderingSession.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -8,6 +8,7 @@ const personHeight = ref();
 
 async function endSession() {
   clearInterval(timerInterval);
+  isDbUpdated.value = false;
   try {
     const response = await fetch("http://localhost:3000/personHeight/personHeight", {
       method: 'PATCH',

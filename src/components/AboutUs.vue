@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import AboutUs from "../components/AboutUs.vue";
 
-const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer "];
-const images = ["src/assets/images/Melanie_B.png", "src/assets/images/Mbala_Elysee.jpg", "src/assets/images/Jacob_M.jpg", "src/assets/images/Maximilian_M.png"];
+const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer"];
+const images = ["src/assets/images/Melanie_Bauer.jpg", "src/assets/images/Mbala_Elysee.jpg", "src/assets/images/Jacob_M.jpg", "src/assets/images/Maximilian_M.png"];
 const index = ref(0);
 
 const next = () => {

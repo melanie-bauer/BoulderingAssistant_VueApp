@@ -1,12 +1,15 @@
   <script>
+  // Importing necessary modules and components
   import {ref} from "vue";
   export const draggableLimbs = ref(['Head', 'Shoulders', 'Hip', 'LE', 'RE', 'LK', 'RK', 'LF', 'RF', 'LH', 'RH']);
   </script>
   <script setup>
+  // Importing necessary modules and components
   import {ref, reactive, onMounted, computed, onBeforeUnmount, watch} from 'vue';
   import { eventbus } from '@/components/Eventbus.js';
-import {isDbUpdated} from "@/views/BoulderingSession.vue";
+  import {isDbUpdated} from "@/views/BoulderingSession.vue";
 
+  // define variables
   const props = defineProps({
     showFixedPositionButton: {
       type: Boolean,
@@ -23,22 +26,35 @@ import {isDbUpdated} from "@/views/BoulderingSession.vue";
   const points = reactive({
     "Head": { id: "Head", x: 160, y: 120 }
   });
-const fetchDataInterval = ref();
+  const fetchDataInterval = ref();
   const filteredPoints = computed(() => {
     const allowedKeys = ['Head', 'item'];
     return Object.fromEntries(Object.entries(points).filter(([key]) => !allowedKeys.includes(key)));
   });
 
-  const displayLimbs= ref(false);
+  const displayLimbs = ref(false);
   const video = ref();
   let mediaStream;
+
+  /**
+   * Watch for changes in props.showFixedPositionButton and update draggableLimbs accordingly
+   * @param {Boolean} newVal - The new value of props.showFixedPositionButton
+   */
   watch(() => props.showFixedPositionButton, (newVal) => {
     if (newVal) {
+      // If the new value is true, set draggableLimbs to include all limbs
       draggableLimbs.value = ['Head', 'Shoulders', 'Hip', 'LE', 'RE', 'LK', 'RK', 'LF', 'RF', 'LH', 'RH'];
     } else {
+      // Otherwise, set draggableLimbs to include only Head, Shoulders, and Hip
       draggableLimbs.value = ['Head', 'Shoulders', 'Hip'];
     }
   });
+
+  /**
+   * Retrieves the limb pair based on the given limb key
+   * @param {string} key - The key of the limb for which the pair is required
+   * @return {string[]} - An array containing the keys of the limb pair along with other related body parts
+   */
   function getLimbPair(key) {
     switch (key) {
       case 'LE':
@@ -57,7 +73,9 @@ const fetchDataInterval = ref();
         return [];
     }
   }
-
+  /**
+   * Fetches data from the server and updates the points on the canvas
+   */
   async function fetchData() {
     try {
       const response = await fetch('http://localhost:3000/points');
@@ -74,7 +92,10 @@ const fetchDataInterval = ref();
       console.error('Error fetching data:', error);
     }
   }
-
+  /**
+   * Draws the stickman on the canvas based on the points
+   * @param {Object} points - The points representing the stickman body parts
+   */
   function drawStickman(points) {
     const ctx = canvas.value.getContext('2d');
     ctx.lineWidth = 5;
@@ -115,7 +136,11 @@ const fetchDataInterval = ref();
     ctx.strokeStyle = 'white';
     ctx.stroke();
   }
-
+  /**
+   * Initiates the drag operation for a limb
+   * @param {Event} event - The drag event
+   * @param {string} key - The key of the limb being dragged
+   */
   function startDrag(event, key) {
     if (!props.showFixedPositionButton && draggableLimbs.value.length === 3) {
       if (['LE', 'LH', 'RE', 'RH', 'LK', 'LF', 'RK', 'RF'].includes(key)) {
@@ -142,7 +167,10 @@ const fetchDataInterval = ref();
       }
     }
   }
-
+  /**
+   * Handles the dragging of a limb
+   * @param {Event} event - The drag event
+   */
   function drag(event) {
     if (!isDragging.value) return;
     const clientX = event.type.startsWith('touch') ? event.touches[0].clientX : event.clientX;
@@ -152,7 +180,9 @@ const fetchDataInterval = ref();
     points[currentPoint.value].y = clientY - offset.y;
     drawStickman(points);
   }
-
+  /**
+   * Ends the drag operation for a limb and updates the point position on the server
+   */
   async function endDrag() {
     isDragging.value = false;
     document.removeEventListener('mousemove', drag);
@@ -173,7 +203,7 @@ const fetchDataInterval = ref();
       console.error('Error updating points:', error);
     }
   }
-
+  // Lifecycle hook that runs when the component is mounted
   onMounted(() => {
     canvas.value = document.getElementById('canvas');
     video.value = document.getElementById('video');
@@ -229,6 +259,8 @@ const fetchDataInterval = ref();
     }
 
   });
+
+  // Lifecycle hook that runs before the component is unmounted
   onBeforeUnmount(() => {
     if (mediaStream) {
       mediaStream.getTracks().forEach(track => {
@@ -239,6 +271,9 @@ const fetchDataInterval = ref();
       clearInterval(fetchDataInterval.value);
     }
   });
+  /**
+   * Draws the video frame on the canvas
+   */
   function drawVideoFrame() {
     const context = canvas.value.getContext('2d');
     context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
@@ -252,30 +287,37 @@ const fetchDataInterval = ref();
   </script>
 
   <template>
+    <!-- Container for video, canvas, and draggable points -->
     <div id="container">
+      <!-- Video element for capturing video feed -->
       <video id="video" autoplay style="display:none;"></video>
+      <!-- Canvas element for drawing stickman and points -->
       <canvas id="canvas" ref="canvas"></canvas>
+
+      <!-- Draggable points -->
       <div
           v-if="displayLimbs"
           v-for="(point, key) in filteredPoints"
           :id="key"
           :key="key"
           :style="{
-          top: point.y - pointSize / 2 + 'px',
-          left: point.x - pointSize / 2 + 'px',
-        }"
+        top: point.y - pointSize / 2 + 'px',
+        left: point.x - pointSize / 2 + 'px',
+      }"
           class="point"
           draggable="true"
           @mousedown="startDrag($event, key)"
           @touchstart="startDrag($event, key)"
       ></div>
+
+      <!-- Head element -->
       <div
           v-if="displayLimbs"
           id="Head"
           :style="{
-          top: points.Head.y - headSize / 2 + 'px',
-          left: points.Head.x - headSize / 2 + 'px',
-        }"
+        top: points.Head.y - headSize / 2 + 'px',
+        left: points.Head.x - headSize / 2 + 'px',
+      }"
           class="head"
           :draggable="true"
           @mousedown="startDrag($event, 'Head')"
@@ -283,6 +325,7 @@ const fetchDataInterval = ref();
       ></div>
     </div>
   </template>
+
 
 
   <style scoped>

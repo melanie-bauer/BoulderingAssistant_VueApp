@@ -1,14 +1,21 @@
 <script setup>
+// Importing necessary variables and components
 import {elapsedTime, timerInterval, startTime, startTiming, isDbUpdated} from "@/views/BoulderingSession.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
 
+// Define a reactive reference for the person's height
 const personHeight = ref();
 
+// Function to end the current session
 async function endSession() {
+  // Clear the timer interval
   clearInterval(timerInterval);
+  // Set the flag to indicate that the database is not updated
   isDbUpdated.value = false;
+
+  // Update the person's height in the database
   try {
     const response = await fetch("http://localhost:3000/personHeight/personHeight", {
       method: 'PATCH',
@@ -22,6 +29,8 @@ async function endSession() {
   } catch (error) {
     console.error('Error updating personHeight:', error);
   }
+
+  // Update the session start time in the database
   try {
     const response = await fetch('http://localhost:3000/startTime/startTime', {
       method: 'PATCH',
@@ -33,10 +42,14 @@ async function endSession() {
   } catch (error) {
     console.error('Error updating startTime:', error);
   }
+
+  // Reset the elapsed time to '00:00'
   elapsedTime.value = '00:00';
 }
 
+// Function executed when the component is mounted
 onMounted(async () => {
+  // Fetch and set the session start time
   try {
     const response = await fetch('http://localhost:3000/startTime/startTime');
     const data = await response.json();
@@ -45,6 +58,8 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error updating personHeight:', error);
   }
+
+  // Fetch and set the person's height
   try {
     const response = await fetch('http://localhost:3000/personHeight/personHeight');
     const data = await response.json();
@@ -52,38 +67,42 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error updating personHeight:', error);
   }
-
 })
 </script>
+
 <template>
+  <!-- Navigation button to return to the previous page -->
   <div class="absolute-container overlay align-items-center">
-    <RouterLink to="/connectRaspi" class="button d-flex align-items-center">
-      <img class="img" src="@/assets/images/back-arrow.png" alt="back arrow">
+    <RouterLink class="button d-flex align-items-center" to="/connectRaspi">
+      <img alt="back arrow" class="img" src="@/assets/images/back-arrow.png">
       Continue
     </RouterLink>
   </div>
+  <!-- Container for the session information -->
   <div class="container d-flex flex-column justify-content-between">
+    <!-- Session information -->
+    <div class="padding">
+      <h4>Time in current Session:</h4>
+      <!-- Display the elapsed time -->
+      <p v-if="elapsedTime" class="h4">{{ elapsedTime }}</p>
+      <p v-else class="h4">00:00</p>
+    </div>
+    <div class="padding">
+      <h4>Height of climbing Person:</h4>
+      <!-- Display the person's height -->
+      <p v-if="elapsedTime" class="h4">{{ personHeight }} cm</p>
+      <p v-else class="h4">00:00</p>
+    </div>
 
-      <div class="padding">
-        <h4>Time in current Session:</h4>
-        <p v-if="elapsedTime" class="h4">{{ elapsedTime }}</p>
-        <p v-else class="h4">00:00</p>
-      </div>
-      <div class="padding">
-        <h4>Height of climbing Person:</h4>
-        <p v-if="elapsedTime" class="h4">{{ personHeight }} cm</p>
-        <p v-else class="h4">00:00</p>
-      </div>
-
+    <!-- Button to end the session -->
     <div class="text-center row d-flex justify-content-center align-items-center padding">
-      <PrimaryButton font-size="30px" to="/" width="100%" class="mx-1" @click="endSession">End Session</PrimaryButton>
+      <PrimaryButton class="mx-1" font-size="30px" to="/" width="100%" @click="endSession">End Session</PrimaryButton>
     </div>
   </div>
 </template>
 
+
 <style scoped>
-
-
 .padding {
   padding: 0 5% 0 5%;
 }
@@ -138,6 +157,7 @@ video {
   text-decoration: none;
   color: var(--text);
 }
+
 @media (prefers-color-scheme: light) {
   .img {
     filter: brightness(0) saturate(100%);

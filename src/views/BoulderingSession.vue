@@ -1,56 +1,60 @@
-<script>
-import {ref} from "vue";
+<script setup>
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
 
-export const elapsedTime = ref('00:00');
-export const timerInterval = ref();
-export const startTime = ref(0);
+// Variables
+const personHeight = ref(''); // Height input field value
+const showError = ref(true); // Flag to show error message
 
-async function atButtonClick() {
-  await resetPoints();
-  await startTiming();
-}
-export const isDbUpdated = ref(false);
-export async function startTiming() {
-  if (timerInterval.value) {
-    clearInterval(timerInterval.value);
-  }
-  if (startTime.value == 0) {
-    startTime.value = Date.now();
+// Methods
+async function validateHeightInput() {
+  const height = parseInt(personHeight.value); // Parse height input value to integer
+  showError.value = isNaN(height) || height < 30 || height > 230; // Show error if height is not a number or out of range
+  if (!showError.value) {
     try {
-      const response = await fetch('http://localhost:3000/startTime/startTime', {
+      const response = await fetch('http://localhost:3000/personHeight/personHeight', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({value: startTime.value})
+        body: JSON.stringify({value: height}) // Update person's height in the database
       });
-
     } catch (error) {
-      console.error('Error updating startTime:', error);
+      console.error('Error updating personHeight:', error);
     }
   }
-  await updateTimer();
-  timerInterval.value = setInterval(updateTimer, 1000);
-
 }
+</script>
 
-const BODY_PROPORTIONS = {
-  Head: {y: 0.20, x: 0.5},        // Adjusted for the head to be slightly above the center
-  Shoulders: {y: 0.30, x: 0.5},   // Shoulders at about 25% from the top
-  Hip: {y: 0.50, x: 0.5},         // Hips at about 55% from the top
-  LH: {y: 0.5, x: 0.25},         // Left hand at 25% height, 25% width
-  RH: {y: 0.5, x: 0.75},         // Right hand at 25% height, 75% width
-  LE: {y: 0.40, x: 0.35},          // Left elbow at 40% height, 25% width
-  RE: {y: 0.40, x: 0.65},          // Right elbow at 40% height, 75% width
-  LK: {y: 0.65, x: 0.35},          // Left knee at 70% height, 25% width
-  RK: {y: 0.65, x: 0.65},          // Right knee at 70% height, 75% width
-  LF: {y: 0.8, x: 0.25},          // Left foot at 90% height, 25% width
-  RF: {y: 0.8, x: 0.75}           // Right foot at 90% height, 75% width
+<script>
+import { ref } from "vue";
+
+// Variables
+export const elapsedTime = ref('00:00'); // Elapsed time counter
+export const timerInterval = ref(); // Interval for updating timer
+export const startTime = ref(0); // Start time of the session
+export const isDbUpdated = ref(false); // Flag to indicate if database is updated
+const BODY_PROPORTIONS = { /* Relative body proportions for mapping points */
+  Head: {y: 0.20, x: 0.5},
+  Shoulders: {y: 0.30, x: 0.5},
+  Hip: {y: 0.50, x: 0.5},
+  LH: {y: 0.5, x: 0.25},
+  RH: {y: 0.5, x: 0.75},
+  LE: {y: 0.40, x: 0.35},
+  RE: {y: 0.40, x: 0.65},
+  LK: {y: 0.65, x: 0.35},
+  RK: {y: 0.65, x: 0.65},
+  LF: {y: 0.8, x: 0.25},
+  RF: {y: 0.8, x: 0.75}
 };
+const points = ref([]); // Array to store body points
 
-const points = ref([]);
+// Methods
 
-async function resetPoints() {
+/**
+ * Reset body points based on screen dimensions and body proportions
+ */
+async function resetBodyPoints() {
   const height = window.innerHeight;
   const width = window.innerWidth;
 
@@ -59,9 +63,12 @@ async function resetPoints() {
     x: width * BODY_PROPORTIONS[key].x,
     y: height * BODY_PROPORTIONS[key].y
   }));
-  await writePointsInDB()
+  await writePointsInDB(); // Write body points to the database
 }
 
+/**
+ * Write body points to the database
+ */
 async function writePointsInDB() {
   for (let point of points.value) {
     try {
@@ -72,82 +79,96 @@ async function writePointsInDB() {
         },
         body: JSON.stringify(point)
       });
-      isDbUpdated.value = true;
+      isDbUpdated.value = true; // Update flag if database is updated
     } catch (error) {
       console.error('Error updating points:', error);
     }
   }
 }
 
-async function updateTimer() {
-  elapsedTime.value = '';
-  const elapsedTimeMs = Date.now() - startTime.value;
-  let seconds = Math.floor(elapsedTimeMs / 1000);
-  if (seconds / 3600 >= 1) {
-    elapsedTime.value += `${Math.floor(seconds / 3600)}:`
-    seconds = seconds % 3600;
+/**
+ * Start timing session and update timer
+ */
+export async function startTiming() {
+  if (timerInterval.value) {
+    clearInterval(timerInterval.value); // Clear previous timer interval
   }
-
-  elapsedTime.value += `${String(Math.floor(seconds / 60)).padStart(2, '0')}:`;
-  seconds = seconds % 60;
-  elapsedTime.value += String(seconds).padStart(2, '0')
-}
-</script>
-<script setup>
-import {onMounted, ref} from "vue";
-import {RouterLink} from "vue-router";
-
-const personHeight = ref('');
-const showError = ref(true);
-
-
-async function validateInput() {
-  const height = parseInt(personHeight.value);
-  showError.value = isNaN(height) || height < 30 || height > 230;
-  if (!showError.value) {
+  if (startTime.value == 0) {
+    startTime.value = Date.now(); // Set start time if not already set
     try {
-      const response = await fetch('http://localhost:3000/personHeight/personHeight', {
+      const response = await fetch('http://localhost:3000/startTime/startTime', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({value: height})
+        body: JSON.stringify({value: startTime.value}) // Update start time in the database
       });
-
     } catch (error) {
-      console.error('Error updating personHeight:', error);
+      console.error('Error updating startTime:', error);
     }
   }
+  await updateTimer(); // Update timer display
+  timerInterval.value = setInterval(updateTimer, 1000); // Start interval for updating timer
 }
 
+/**
+ * Update timer display with elapsed time
+ */
+async function updateTimer() {
+  elapsedTime.value = '';
+  const elapsedTimeMs = Date.now() - startTime.value;
+  let seconds = Math.floor(elapsedTimeMs / 1000);
+  // Format elapsed time in HH:MM:SS format
+  if (seconds / 3600 >= 1) {
+    elapsedTime.value += `${Math.floor(seconds / 3600)}:`
+    seconds = seconds % 3600;
+  }
+  elapsedTime.value += `${String(Math.floor(seconds / 60)).padStart(2, '0')}:`;
+  seconds = seconds % 60;
+  elapsedTime.value += String(seconds).padStart(2, '0')
+}
+
+/**
+ * Reset body points and start timing session when button is clicked
+ */
+async function handleButtonClick() {
+  await resetBodyPoints(); // Reset body points
+  await startTiming(); // Start timing session
+}
 </script>
 
 
 <template>
+  <!-- Navigation button -->
   <div class="absolute-container overlay align-items-center">
     <RouterLink class="button d-flex align-items-center" to="/">
       <img class="img" src="@/assets/images/home.png">
     </RouterLink>
   </div>
 
+  <!-- Main content -->
   <div class="container d-flex flex-column justify-content-between">
     <div class="text-center mt-5">
       <label class="form-label text">Enter Person's Height</label>
+      <!-- Height input field -->
       <input v-model="personHeight" aria-label=".form-control-lg example"
              class="form-control form-control-lg input my-3"
              placeholder="Height in cm"
-             type="text" @input="validateInput">
+             type="text" @input="validateHeightInput">
+      <!-- Error message for invalid height -->
       <p v-if="showError" class="text-danger mt-1">Please enter a number between 30 and 230.</p>
     </div>
     <div class="text-center">
+      <!-- Start session button -->
       <RouterLink
           v-if="!showError"
           :style="{ width: '100%', fontSize: '30px'}"
           class="btn btn-primary"
           to="/connectRaspi"
-          @click="atButtonClick">
+          @click="handleButtonClick">
         Start Session
       </RouterLink>
+      <!-- Disabled start session button when there's an error -->
       <button
           v-else
           :style="{ width: '100%', fontSize: '30px', opacity: 0.5 }"

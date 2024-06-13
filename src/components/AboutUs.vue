@@ -53,11 +53,17 @@ svg {
 
 .image-wrapper {
   text-align: center;
+  height: 60vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .main-image {
-  min-height: 60vh;
+  min-height: 50vh;
   max-height: 60vh;
+  max-width: 80%;
   margin: 0 20px;
 }
 

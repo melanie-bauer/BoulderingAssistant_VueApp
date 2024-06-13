@@ -69,5 +69,8 @@ h1, h2, h3{
 }
 .large-mb
 {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl) !important;
+}
+.hover:hover{
+    box-shadow: 0 0 40px 2px var(--secondary);
 }

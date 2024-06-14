@@ -24,7 +24,7 @@ async function endSession() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        value: 0
+        personHeight: 0
       })
     });
   } catch (error) {
@@ -38,7 +38,7 @@ async function endSession() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({value: 0})
+      body: JSON.stringify({startTime: 0})
     });
   } catch (error) {
     console.error('Error updating startTime:', error);

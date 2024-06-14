@@ -17,7 +17,7 @@ async function validateHeightInput() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({value: height}) // Update person's height in the database
+        body: JSON.stringify({personHeight: height}) // Update person's height in the database
       });
     } catch (error) {
       console.error('Error updating personHeight:', error);
@@ -101,7 +101,7 @@ export async function startTiming() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({value: startTime.value}) // Update start time in the database
+        body: JSON.stringify({startTime: startTime.value}) // Update start time in the database
       });
     } catch (error) {
       console.error('Error updating startTime:', error);

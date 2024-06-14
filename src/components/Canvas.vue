@@ -79,22 +79,7 @@
    */
   async function fetchData() {
     if (isDragging.value) {
-      setTimeout(async () => {
-        // If still dragging, skip fetch
-        if (isDragging.value) return;
-        try {
-          const response = await fetch(`${baseURL}/points`);
-          const data = await response.json();
-          Object.assign(points, data.reduce((acc, point) => {
-            acc[point.id] = point;
-            return acc;
-          }, {}));
-          drawStickman(points);
-          displayLimbs.value = true;
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }, 100); // 100ms delay
+     return;
     } else {
       try {
         const response = await fetch(`${baseURL}/points`);

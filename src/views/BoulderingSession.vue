@@ -12,7 +12,7 @@ async function validateHeightInput() {
   showError.value = isNaN(height) || height < 30 || height > 230; // Show error if height is not a number or out of range
   if (!showError.value) {
     try {
-      const response = await fetch(`${baseURL}/personHeight/personHeight`, {
+      const response = await fetch(`${baseURL}/personHeight`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -93,10 +93,10 @@ export async function startTiming() {
   if (timerInterval.value) {
     clearInterval(timerInterval.value); // Clear previous timer interval
   }
-  if (startTime.value == 0) {
+  if (startTime.value === 0) {
     startTime.value = Date.now(); // Set start time if not already set
     try {
-      const response = await fetch(`${baseURL}/startTime/startTime`, {
+      const response = await fetch(`${baseURL}/startTime`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

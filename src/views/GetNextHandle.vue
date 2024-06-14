@@ -190,7 +190,7 @@ function getDifferenceHolds(limb)
  */
 onMounted(async () => {
   try {
-    const response = await fetch(`${baseURL}/startTime/startTime`);
+    const response = await fetch(`${baseURL}/startTime`);
     const data = await response.json();
     startTime.value = data.value;
       await startTiming();

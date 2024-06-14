@@ -22,7 +22,7 @@
   const isDragging = ref(false);
   const currentPoint = ref(null);
   const offset = reactive({ x: 0, y: 0 });
-  const pointSize = 20;
+  const pointSize = 25;
   const headSize = 60;
   const points = reactive({
     "Head": { id: "Head", x: 160, y: 120 }
@@ -166,6 +166,7 @@
 
       }
     }
+    event.preventDefault();
     let value = draggableLimbs.value.map(item => item);
     if(value.includes(key)) {
       isDragging.value = true;
@@ -193,7 +194,7 @@
     if (!isDragging.value) return;
     const clientX = event.type.startsWith('touch') ? event.touches[0].clientX : event.clientX;
     const clientY = event.type.startsWith('touch') ? event.touches[0].clientY : event.clientY;
-
+    event.preventDefault();
     points[currentPoint.value].x = clientX - offset.x;
     points[currentPoint.value].y = clientY - offset.y;
     drawStickman(points);
@@ -358,8 +359,8 @@
 
   .point, .head {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     background-color: white;
     border-radius: 50%;
     cursor: pointer;

@@ -78,19 +78,36 @@
    * Fetches data from the server and updates the points on the canvas
    */
   async function fetchData() {
-    try {
-      const response = await fetch(`${baseURL}/points`);
-      const data = await response.json();
-      if (!isDragging.value) {
+    if (isDragging.value) {
+      setTimeout(async () => {
+        // If still dragging, skip fetch
+        if (isDragging.value) return;
+        try {
+          const response = await fetch(`${baseURL}/points`);
+          const data = await response.json();
+          Object.assign(points, data.reduce((acc, point) => {
+            acc[point.id] = point;
+            return acc;
+          }, {}));
+          drawStickman(points);
+          displayLimbs.value = true;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }, 100); // 100ms delay
+    } else {
+      try {
+        const response = await fetch(`${baseURL}/points`);
+        const data = await response.json();
         Object.assign(points, data.reduce((acc, point) => {
           acc[point.id] = point;
           return acc;
         }, {}));
         drawStickman(points);
         displayLimbs.value = true;
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
     }
   }
   /**
@@ -217,7 +234,7 @@
         fetchData()
       }, 300);
     }
-    fetchDataInterval.value = setInterval(fetchData, 3000);
+    fetchDataInterval.value = setInterval(fetchData, 1000);
 
     eventbus.on('reset-draggable-limbs', async (oldPoints) => {
 

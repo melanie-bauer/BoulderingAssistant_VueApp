@@ -1,18 +1,36 @@
 <script setup>
-import { ref } from 'vue'
-import AboutUs from "../components/AboutUs.vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer"];
-const images = ["src/assets/images/Melanie_Bauer.jpg", "src/assets/images/Mbala_Elysee.jpg", "src/assets/images/Jacob_Mayrwöger.jpg", "src/assets/images/Maximilian_Neumayer.jpg"];
+const images = [
+  new URL('@/assets/images/Melanie_Bauer.jpg', import.meta.url).href,
+  new URL('@/assets/images/Mbala_Elysee.jpg', import.meta.url).href,
+  new URL('@/assets/images/Jacob_Mayrwöger.jpg', import.meta.url).href,
+  new URL('@/assets/images/Maximilian_Neumayer.jpg', import.meta.url).href
+];
 const index = ref(0);
+const isCarousel = ref(window.innerWidth < 992);
 
 const next = () => {
   index.value = (index.value + 1) % names.length;
-}
+};
 
 const prev = () => {
   index.value = (index.value - 1 + names.length) % names.length;
-}
+};
+
+const handleResize = () => {
+  isCarousel.value = window.innerWidth < 992;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>
 
 <template>
@@ -20,19 +38,24 @@ const prev = () => {
     <div class="row small-mb">
       <h1 class="text-align-center">About Us</h1>
     </div>
-    <div>
-    <button @click="prev" class="arrow left">
-      <img src="@/assets/images/prev.png" alt="Previous">
-    </button>
-    <div class="image-wrapper">
-      <img :src="images[index]" alt="Image" class="main-image img-fluid">
-
+    <div v-if="isCarousel" class="carousel">
+      <button @click="prev" class="arrow left">
+        <img src="@/assets/images/prev.png" alt="Previous">
+      </button>
+      <div class="image-wrapper">
+        <img :src="images[index]" alt="Image" class="main-image img-fluid">
+      </div>
+      <button @click="next" class="arrow right">
+        <img src="@/assets/images/next.png" alt="Next">
+      </button>
+      <h4 class="caption">{{ names[index] }}</h4>
     </div>
-    <button @click="next" class="arrow right">
-      <img src="@/assets/images/next.png" alt="Next">
-    </button>
+    <div v-else class="grid-layout">
+      <div v-for="(img, i) in images" :key="i" class="grid-item">
+        <img :src="img" :alt="names[i]" class="grid-image img-fluid">
+        <h4 class="caption">{{ names[i] }}</h4>
+      </div>
     </div>
-    <h4 class="caption ">{{ names[index] }}</h4>
   </div>
 </template>
 
@@ -46,16 +69,24 @@ const prev = () => {
   margin-top: 35px;
 }
 
-img,
-svg {
+img, svg {
   vertical-align: inherit;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
 }
 
 .image-wrapper {
   text-align: center;
   height: 60vh;
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -92,9 +123,52 @@ svg {
 .arrow.right {
   right: 1%;
 }
+
 @media (prefers-color-scheme: light) {
   .arrow > img {
     filter: brightness(0) saturate(100%);
+  }
+}
+
+.grid-layout {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-image {
+  min-width: 30vw;
+  max-width: 30vw;
+}
+
+@media (min-width: 992px) {
+  .grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .caption{
+    margin: 20px 0 30px 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid-layout {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 20px;
+  }
+  .grid-image{
+    min-width: 20vw;
+    max-width: 20vw;
+  }
+  .grid-item{
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

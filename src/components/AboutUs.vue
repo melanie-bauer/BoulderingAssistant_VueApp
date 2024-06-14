@@ -1,100 +1,33 @@
 <script setup>
-import { ref } from 'vue'
-import AboutUs from "../components/AboutUs.vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import melanieImage from '@/assets/images/Melanie_Bauer.jpg';
+import mbalaImage from '@/assets/images/Mbala_Elysee.jpg';
+import jacobImage from '@/assets/images/Jacob_Mayrwöger.jpg';
+import maximilianImage from '@/assets/images/Maximilian_Neumayer.jpg';
 
 const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer"];
-const images = ["src/assets/images/Melanie_Bauer.jpg", "src/assets/images/Mbala_Elysee.jpg", "src/assets/images/Jacob_Mayrwöger.jpg", "src/assets/images/Maximilian_Neumayer.jpg"];
+const images = [melanieImage, mbalaImage, jacobImage, maximilianImage];
 const index = ref(0);
+const isCarousel = ref(window.innerWidth < 992);
 
 const next = () => {
   index.value = (index.value + 1) % names.length;
-}
+};
 
 const prev = () => {
   index.value = (index.value - 1 + names.length) % names.length;
-}
+};
+
+const handleResize = () => {
+  isCarousel.value = window.innerWidth < 992;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>
-
-<template>
-  <div class="container">
-    <div class="row small-mb">
-      <h1 class="text-align-center">About Us</h1>
-    </div>
-    <div>
-    <button @click="prev" class="arrow left">
-      <img src="@/assets/images/prev.png" alt="Previous">
-    </button>
-    <div class="image-wrapper">
-      <img :src="images[index]" alt="Image" class="main-image img-fluid">
-
-    </div>
-    <button @click="next" class="arrow right">
-      <img src="@/assets/images/next.png" alt="Next">
-    </button>
-    </div>
-    <h4 class="caption ">{{ names[index] }}</h4>
-  </div>
-</template>
-
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-top: 35px;
-}
-
-img,
-svg {
-  vertical-align: inherit;
-}
-
-.image-wrapper {
-  text-align: center;
-  height: 60vh;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.main-image {
-  min-height: 50vh;
-  max-height: 60vh;
-  max-width: 80%;
-  margin: 0 20px;
-}
-
-.caption {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-.arrow {
-  background-color: transparent;
-  border: none;
-  position: absolute;
-  top: 47%;
-  transform: translateY(-50%);
-}
-
-.arrow img {
-  width: 25px;
-  height: auto;
-}
-
-.arrow.left {
-  left: 1%;
-}
-
-.arrow.right {
-  right: 1%;
-}
-@media (prefers-color-scheme: light) {
-  .arrow > img {
-    filter: brightness(0) saturate(100%);
-  }
-}
-</style>

@@ -4,6 +4,7 @@ import {elapsedTime, timerInterval, startTime, startTiming, isDbUpdated} from "@
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
+import {baseURL} from "@/App.vue";
 
 // Define a reactive reference for the person's height
 const personHeight = ref();
@@ -32,7 +33,7 @@ async function endSession() {
 
   // Update the session start time in the database
   try {
-    const response = await fetch('http://localhost:3000/startTime/startTime', {
+    const response = await fetch(`${baseURL}/startTime/startTime`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -51,7 +52,7 @@ async function endSession() {
 onMounted(async () => {
   // Fetch and set the session start time
   try {
-    const response = await fetch('http://localhost:3000/startTime/startTime');
+    const response = await fetch(`${baseURL}/startTime/startTime`);
     const data = await response.json();
     startTime.value = data.value;
     await startTiming();
@@ -61,7 +62,7 @@ onMounted(async () => {
 
   // Fetch and set the person's height
   try {
-    const response = await fetch('http://localhost:3000/personHeight/personHeight');
+    const response = await fetch(`${baseURL}/personHeight/personHeight`);
     const data = await response.json();
     personHeight.value = data.value;
   } catch (error) {

@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
-
 // Variables
 const personHeight = ref(''); // Height input field value
 const showError = ref(true); // Flag to show error message
@@ -12,7 +11,7 @@ async function validateHeightInput() {
   showError.value = isNaN(height) || height < 30 || height > 230; // Show error if height is not a number or out of range
   if (!showError.value) {
     try {
-      const response = await fetch('http://localhost:3000/personHeight/personHeight', {
+      const response = await fetch(`${baseURL}/personHeight/personHeight`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -28,7 +27,7 @@ async function validateHeightInput() {
 
 <script>
 import { ref } from "vue";
-
+import {baseURL} from "@/App.vue";
 // Variables
 export const elapsedTime = ref('00:00'); // Elapsed time counter
 export const timerInterval = ref(); // Interval for updating timer
@@ -72,7 +71,7 @@ async function resetBodyPoints() {
 async function writePointsInDB() {
   for (let point of points.value) {
     try {
-      const response = await fetch(`http://localhost:3000/points/${point.id}`, {
+      const response = await fetch(`${baseURL}/points/${point.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -96,7 +95,7 @@ export async function startTiming() {
   if (startTime.value == 0) {
     startTime.value = Date.now(); // Set start time if not already set
     try {
-      const response = await fetch('http://localhost:3000/startTime/startTime', {
+      const response = await fetch(`${baseURL}/startTime/startTime`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

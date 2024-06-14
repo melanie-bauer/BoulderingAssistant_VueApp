@@ -1,7 +1,7 @@
 <script setup>
 import {RouterLink, RouterView} from 'vue-router'
 import {ref} from "vue";
-
+export const baseURL = "https://deploy-json-server-vercel.vercel.app/"
 const onHome = ref(true);
 
 function changeOnHome() {

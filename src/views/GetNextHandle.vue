@@ -7,7 +7,7 @@ import { onMounted, ref, watch } from "vue";
 import { eventbus } from '@/components/Eventbus.js';
 import { elapsedTime, startTime, startTiming } from "@/views/BoulderingSession.vue"; // Importing timing related variables and functions
 import { RouterLink } from "vue-router";
-
+import {baseURL} from "@/App.vue";
 // Variables and reactive references
 const showFixedPositionButton = ref(true); // Flag to show/hide fixed position button
 const oldPosition = ref({}); // Object to store previous position
@@ -22,7 +22,7 @@ const personHeight = ref(); // Reference to store person's height
 async function confirmPosition() {
   showFixedPositionButton.value = !showFixedPositionButton.value;
   try {
-    const response = await fetch('http://localhost:3000/points');
+    const response = await fetch(`${baseURL}/points`);
     const data = await response.json();
     Object.assign(oldPosition, data.reduce((acc, point) => {
         acc[point.id] = point;
@@ -46,14 +46,14 @@ function resetDraggableLimbs() {
 async function confirmNextHandle()
 {
   try {
-    const response = await fetch('http://localhost:3000/personHeight');
+    const response = await fetch(`${baseURL}/personHeight`);
     const data = await response.json();
     personHeight.value = data[0].value;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
   try {
-    const response = await fetch('http://localhost:3000/points');
+    const response = await fetch(`${baseURL}/points`);
     const data = await response.json();
     Object.assign(newPosition, data.reduce((acc, point) => {
       acc[point.id] = point;
@@ -190,7 +190,7 @@ function getDifferenceHolds(limb)
  */
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/startTime/startTime');
+    const response = await fetch(`${baseURL}/startTime/startTime`);
     const data = await response.json();
     startTime.value = data.value;
       await startTiming();

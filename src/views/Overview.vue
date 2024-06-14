@@ -4,7 +4,7 @@ import {elapsedTime, timerInterval, startTime, startTiming, isDbUpdated} from "@
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
-import {baseURL} from "@/App.vue";
+import {baseURL} from "@/config.js";
 
 // Define a reactive reference for the person's height
 const personHeight = ref();
@@ -18,7 +18,7 @@ async function endSession() {
 
   // Update the person's height in the database
   try {
-    const response = await fetch("http://localhost:3000/personHeight/personHeight", {
+    const response = await fetch(`${baseURL}/personHeight/personHeight`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

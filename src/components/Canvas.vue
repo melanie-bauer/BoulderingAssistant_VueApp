@@ -8,6 +8,7 @@
   import {ref, reactive, onMounted, computed, onBeforeUnmount, watch} from 'vue';
   import { eventbus } from '@/components/Eventbus.js';
   import {isDbUpdated} from "@/views/BoulderingSession.vue";
+  import {baseURL} from "@/config.js";
 
   // define variables
   const props = defineProps({
@@ -78,7 +79,7 @@
    */
   async function fetchData() {
     try {
-      const response = await fetch('http://localhost:3000/points');
+      const response = await fetch(`${baseURL}/points`);
       const data = await response.json();
       if (!isDragging.value) {
         Object.assign(points, data.reduce((acc, point) => {
@@ -192,7 +193,7 @@
 
     const key = currentPoint.value;
     try {
-      const response = await fetch(`http://localhost:3000/points/${key}`, {
+      const response = await fetch(`${baseURL}/points/${key}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -223,7 +224,7 @@
       for(let limb in draggableLimbs.value)
       {
         try {
-          const response = await fetch(`http://localhost:3000/points/${draggableLimbs.value[limb]}`, {
+          const response = await fetch(`${baseURL}/points/${draggableLimbs.value[limb]}`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'

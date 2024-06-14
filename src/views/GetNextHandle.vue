@@ -7,7 +7,7 @@ import { onMounted, ref, watch } from "vue";
 import { eventbus } from '@/components/Eventbus.js';
 import { elapsedTime, startTime, startTiming } from "@/views/BoulderingSession.vue"; // Importing timing related variables and functions
 import { RouterLink } from "vue-router";
-import {baseURL} from "@/App.vue";
+import {baseURL} from "@/config.js";
 // Variables and reactive references
 const showFixedPositionButton = ref(true); // Flag to show/hide fixed position button
 const oldPosition = ref({}); // Object to store previous position

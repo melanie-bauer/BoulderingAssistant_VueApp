@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import {baseURL} from "@/config.js";
 // Variables
 const personHeight = ref(''); // Height input field value
 const showError = ref(true); // Flag to show error message
@@ -27,7 +28,7 @@ async function validateHeightInput() {
 
 <script>
 import { ref } from "vue";
-import {baseURL} from "@/App.vue";
+import {baseURL} from "@/config.js";
 // Variables
 export const elapsedTime = ref('00:00'); // Elapsed time counter
 export const timerInterval = ref(); // Interval for updating timer

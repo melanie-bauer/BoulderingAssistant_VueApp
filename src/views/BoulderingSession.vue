@@ -93,7 +93,7 @@ export async function startTiming() {
   if (timerInterval.value) {
     clearInterval(timerInterval.value); // Clear previous timer interval
   }
-  if (startTime.value === 0) {
+  if (startTime.value === 0 || startTime.value == undefined) {
     startTime.value = Date.now(); // Set start time if not already set
     try {
       const response = await fetch(`${baseURL}/startTime`, {

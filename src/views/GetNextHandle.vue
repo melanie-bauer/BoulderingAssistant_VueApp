@@ -48,7 +48,7 @@ async function confirmNextHandle()
   try {
     const response = await fetch(`${baseURL}/personHeight`);
     const data = await response.json();
-    personHeight.value = data[0].value;
+    personHeight.value = data;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -192,7 +192,7 @@ onMounted(async () => {
   try {
     const response = await fetch(`${baseURL}/startTime`);
     const data = await response.json();
-    startTime.value = data.value;
+    startTime.value = data;
       await startTiming();
   } catch (error) {
     console.error('Error updating personHeight:', error);

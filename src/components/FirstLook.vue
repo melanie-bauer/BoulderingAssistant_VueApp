@@ -16,8 +16,11 @@ import PrimaryButton from "@/components/PrimaryButton.vue";
 </template>
 
 <style scoped>
-
-
+.container{
+  background-color: var(--background);
+  color: var(--text);
+  padding: 0 15px 65px 15px;
+}
 p{
   font-size: 18px !important;
   line-height: 26px !important;

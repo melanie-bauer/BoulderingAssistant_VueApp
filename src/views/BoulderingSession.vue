@@ -42,10 +42,10 @@ const BODY_PROPORTIONS = { /* Relative body proportions for mapping points */
   RH: {y: 0.5, x: 0.75},
   LE: {y: 0.40, x: 0.35},
   RE: {y: 0.40, x: 0.65},
-  LK: {y: 0.65, x: 0.35},
-  RK: {y: 0.65, x: 0.65},
-  LF: {y: 0.8, x: 0.25},
-  RF: {y: 0.8, x: 0.75}
+  LK: {y: 0.6, x: 0.35},
+  RK: {y: 0.6, x: 0.65},
+  LF: {y: 0.75, x: 0.25},
+  RF: {y: 0.75, x: 0.75}
 };
 const points = ref([]); // Array to store body points
 
@@ -184,7 +184,7 @@ async function handleButtonClick() {
   box-shadow: 0 0 15px 5px var(--primary);
 }
 .mt{
-  margin-top: 60%;
+  margin-top: calc(var(--vh, 1vh) * 60);
 }
 .absolute-container {
   position: absolute;

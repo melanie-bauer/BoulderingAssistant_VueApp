@@ -184,7 +184,7 @@ async function handleButtonClick() {
   box-shadow: 0 0 15px 5px var(--primary);
 }
 .mt{
-  margin-top: calc(var(--vh, 1vh) * 60);
+  margin-top: 50%;
 }
 .absolute-container {
   position: absolute;

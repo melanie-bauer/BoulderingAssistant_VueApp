@@ -26,6 +26,7 @@
   --header-sm: 20px;
   --label-r: 15px;
   --button-radius: 20px;
+  --vh: 1;
   @media (prefers-color-scheme: light) {
     --text: #04040b;
     --background: #fbfbfe;

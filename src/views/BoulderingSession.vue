@@ -208,7 +208,7 @@ input {
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   padding-bottom: 40px;
   padding-top: 15px;
 }

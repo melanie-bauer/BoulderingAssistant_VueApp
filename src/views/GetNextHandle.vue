@@ -277,7 +277,6 @@ onMounted(async () => {
 }
 
 .container {
-  position: absolute;
   width: 100vw;
   height: 100vh;
   padding-bottom: 40px;

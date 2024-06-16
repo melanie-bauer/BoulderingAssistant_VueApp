@@ -125,12 +125,10 @@ onMounted(async () => {
 }
 
 .container {
-  position: absolute;
-  top: 20vh;
-  width: 100vw;
-  height: 80vh;
+   width: 100vw;
+  height: 100vh;
   padding-bottom: 40px;
-  padding-top: 15px;
+  padding-top: 25vh;
 }
 
 video {

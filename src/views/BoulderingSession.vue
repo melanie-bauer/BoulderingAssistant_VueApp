@@ -139,16 +139,15 @@ async function handleButtonClick() {
 
 
 <template>
-  <!-- Navigation button -->
-  <div class="absolute-container overlay align-items-center">
-    <RouterLink class="button d-flex align-items-center" to="/">
-      <img class="img" src="@/assets/images/home.png">
-    </RouterLink>
-  </div>
-
   <!-- Main content -->
   <div class="container d-flex flex-column justify-content-between">
-    <div class="text-center mt-5">
+    <!-- Navigation button -->
+    <div class="absolute-container overlay align-items-center">
+      <RouterLink class="button d-flex align-items-center" to="/">
+        <img class="img" src="@/assets/images/home.png">
+      </RouterLink>
+    </div>
+    <div class="text-center mt">
       <label class="form-label text">Enter Person's Height</label>
       <!-- Height input field -->
       <input v-model="personHeight" aria-label=".form-control-lg example"
@@ -184,7 +183,9 @@ async function handleButtonClick() {
   outline: none;
   box-shadow: 0 0 15px 5px var(--primary);
 }
-
+.mt{
+  margin-top: 60%;
+}
 .absolute-container {
   position: absolute;
   top: 22px;
@@ -206,10 +207,8 @@ input {
 }
 
 .container {
-  position: absolute;
-  top: 20vh;
   width: 100vw;
-  height: 80vh;
+  height: 100vh;
   padding-bottom: 40px;
   padding-top: 15px;
 }

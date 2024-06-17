@@ -1,12 +1,15 @@
 <template>
   <div>
     <button class="height-toggle-button" @click="toggleHeightBar" :class="{ 'button-on-bar': heightBarVisible }">
-
+      <!-- You can add button label here if needed -->
     </button>
     <transition name="slide">
       <div v-if="heightBarVisible" class="height-bar">
         <div class="height-markers">
-          <div v-for="height in heights" :key="height" class="height-marker">{{ height }}</div>
+          <button v-for="height in heights" :key="height" @click="setClickedHeight(height)"
+            :class="{ 'height-marker': true, 'height-marker-active': clickedHeight === height }">
+            {{ height }}
+          </button>
         </div>
       </div>
     </transition>
@@ -19,11 +22,32 @@ export default {
     return {
       heightBarVisible: false,
       heights: ['3.0m', '2.5m', '2.0m', '1.5m', '1.0m'],
+      clickedHeight: null, // New data property to track the clicked button
+      baseURL: 'https://172.18.120.191:3000',
+      isDbUpdated: false
     };
   },
   methods: {
     toggleHeightBar() {
       this.heightBarVisible = !this.heightBarVisible;
+    },
+    async setClickedHeight(height) {
+      this.clickedHeight = height; 
+      await this.writeHeightInDB(height); // Write the height to the DB
+    },
+    async writeHeightInDB(height) {
+      try {
+        const response = await fetch(`${this.baseURL}/climbingheight`, { 
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({climbingHeight: height })
+        });    
+         
+      } catch (error) {
+        console.error('Error updating climbing height:', error);
+      }
     }
   }
 };
@@ -37,7 +61,7 @@ export default {
   transform: translateY(-50%);
   width: 25px;
   height: 77px;
-  background-color: rgba(113, 106, 180, 1);
+  background-color: var(--secondary);
   color: #000000;
   border: none;
   border-bottom-left-radius: 0.70rem;
@@ -58,8 +82,7 @@ export default {
   width: 152px;
   margin: auto;
   height: 100%;
-  background-color: rgba(113, 106, 180, 1);
-  border: thin solid rgba(113, 106, 180, 1);
+  background-color: var(--secondary);
   z-index: 15;
   display: flex;
   align-items: center;
@@ -71,9 +94,9 @@ export default {
 .height-markers {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
   align-items: center;
-  width: 70%
+  width: 70%;
 }
 
 .height-marker {
@@ -87,6 +110,12 @@ export default {
   justify-content: center;
   font-size: 30px;
   border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.height-marker-active {
+  box-shadow: 0 0 10px 3px var(--accent);
+  /* Glowing shadow effect */
 }
 
 .button-on-bar {
@@ -114,15 +143,15 @@ export default {
   .height-marker {
     font-size: 25px;
     width: 67px;
-    height: 2rem; /* Adjusted fixed height for smaller screens */
+    height: 4rem;
   }
 
   .button-on-bar {
-    right: 9rem;
+    right: 7.7rem;
   }
 
   .height-bar {
-    width: 145px;
+    width: 125px;
   }
 }
 </style>

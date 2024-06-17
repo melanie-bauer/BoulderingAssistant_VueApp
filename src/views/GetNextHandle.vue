@@ -70,7 +70,7 @@ async function confirmNextHandle()
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-
+  
 }
 /**
  * Generate speech output based on the limb movement
@@ -224,6 +224,7 @@ onMounted(async () => {
     <!-- Canvas component -->
     <Canvas :show-fixed-position-button="showFixedPositionButton"></Canvas>
 
+  <!-- Height toggle button -->
     <HeightToggleButton @toggle-height-bar="toggleHeightBar"></HeightToggleButton>
     <!-- Action buttons -->
     <div class="text-center row d-flex justify-content-center align-items-center padding">

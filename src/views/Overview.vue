@@ -1,6 +1,6 @@
 <script setup>
 // Importing necessary variables and components
-import {elapsedTime, timerInterval, startTime, startTiming, isDbUpdated} from "@/views/BoulderingSession.vue";
+import {elapsedTime, isDbUpdated, startTime, startTiming, timerInterval} from "@/views/BoulderingSession.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import {onMounted, ref} from "vue";
 import {RouterLink} from "vue-router";
@@ -8,6 +8,7 @@ import {baseURL} from "@/config.js";
 
 // Define a reactive reference for the person's height
 const personHeight = ref();
+const currentHeight = ref();
 
 // Function to end the current session
 async function endSession() {
@@ -43,6 +44,17 @@ async function endSession() {
   } catch (error) {
     console.error('Error updating startTime:', error);
   }
+  try {
+    const response = await fetch(`${baseURL}/climbingHeight`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({climbingHeight: "0.0m"})
+    });
+  } catch (error) {
+    console.error('Error updating climbing height:', error);
+  }
 
   // Reset the elapsed time to '00:00'
   elapsedTime.value = '00:00';
@@ -53,8 +65,7 @@ onMounted(async () => {
   // Fetch and set the session start time
   try {
     const response = await fetch(`${baseURL}/startTime`);
-    const data = await response.json();
-    startTime.value = data;
+    startTime.value = await response.json();
     await startTiming();
   } catch (error) {
     console.error('Error updating personHeight:', error);
@@ -63,10 +74,15 @@ onMounted(async () => {
   // Fetch and set the person's height
   try {
     const response = await fetch(`${baseURL}/personHeight`);
-    const data = await response.json();
-    personHeight.value = data;
+    personHeight.value = await response.json();
   } catch (error) {
     console.error('Error updating personHeight:', error);
+  }
+  try {
+    const response = await fetch(`${baseURL}/climbingHeight`);
+    personHeight.value = await response.json();
+  } catch (error) {
+    console.error('Error updating climbing height:', error);
   }
 })
 </script>
@@ -91,10 +107,15 @@ onMounted(async () => {
     <div class="padding">
       <h4>Height of climbing Person:</h4>
       <!-- Display the person's height -->
-      <p v-if="elapsedTime" class="h4">{{ personHeight }} cm</p>
-      <p v-else class="h4">00:00</p>
+      <p v-if="personHeight" class="h4">{{ personHeight }} cm</p>
+      <p v-else class="h4">0 cm</p>
     </div>
-
+    <div class="padding">
+      <h4>Current climbing Height:</h4>
+      <!-- Display the current climbing height -->
+      <p v-if="currentHeight" class="h4">{{ currentHeight }} cm</p>
+      <p v-else class="h4">0.0m</p>
+    </div>
     <!-- Button to end the session -->
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <PrimaryButton class="mx-1" font-size="30px" to="/" width="100%" @click="endSession">End Session</PrimaryButton>

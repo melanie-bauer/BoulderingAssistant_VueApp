@@ -17,14 +17,13 @@
 </template>
 
 <script>
+import {baseURL} from "@/config.js";
 export default {
   data() {
     return {
       heightBarVisible: false,
       heights: ['3.0m', '2.5m', '2.0m', '1.5m', '1.0m'],
       clickedHeight: null, // New data property to track the clicked button
-      baseURL: 'https://172.18.120.191:3000',
-      isDbUpdated: false
     };
   },
   methods: {
@@ -37,7 +36,7 @@ export default {
     },
     async writeHeightInDB(height) {
       try {
-        const response = await fetch(`${this.baseURL}/climbingheight`, { 
+        const response = await fetch(`${baseURL}/climbingHeight`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'

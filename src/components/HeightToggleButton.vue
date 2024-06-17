@@ -78,7 +78,7 @@ export default {
 
 .height-marker {
   width: 80px;
-  height: 4rem;
+  height: 70px;
   background-color: #ffffff;
   color: #000000;
   border: 2px solid transparent;

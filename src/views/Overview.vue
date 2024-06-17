@@ -80,7 +80,7 @@ onMounted(async () => {
   }
   try {
     const response = await fetch(`${baseURL}/climbingHeight`);
-    personHeight.value = await response.json();
+    currentHeight.value = await response.json();
   } catch (error) {
     console.error('Error updating climbing height:', error);
   }

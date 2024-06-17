@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400..800&family=NTR&display=swap');
+
 :root {
   --font-family: 'NTR', sans-serif;
   --font-weight-heading: 600;
@@ -27,6 +28,7 @@
   --label-r: 15px;
   --button-radius: 20px;
   --vh: 1;
+
   @media (prefers-color-scheme: light) {
     --text: #04040b;
     --background: #fbfbfe;
@@ -35,9 +37,9 @@
     --accent: #E8D5B0FF;
   }
 
-      --text: #f4f4fb;
-      --background: #010104;
-      --primary: #716ab4;
-      --secondary: #28206f;
-      --accent: #E8D5B0FF;
+  --text: #f4f4fb;
+  --background: #010104;
+  --primary: #716ab4;
+  --secondary: #535b95;
+  --accent: #E8D5B0FF;
 }

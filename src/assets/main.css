@@ -9,15 +9,13 @@ body{
 
 }
 .h4, .h5, .h6{
-    font-weight: var(--font-weight-heading) !important;
     line-height: var(--line-height-header) !important;
     font-size: var(--header-sm) !important;
     letter-spacing: var(--letter-spacing-header);
 }
 h4, h5, h6{
-    font-weight: var(--font-weight-heading) !important;
     line-height: var(--line-height-header) !important;
-    font-size: var(--header-r) !important;
+    font-size: var(--header-sm) !important;
     letter-spacing: var(--letter-spacing-header);
 }
 
@@ -42,7 +40,6 @@ h1, h2, h3{
 }
 .btn{
     padding: 3px 10px 1px 9px !important;
-    /*box-shadow: 0 10px 20px -5px var(--primary);*/
 }
 .btn-primary {
     --bs-btn-color: #fff !important;
@@ -73,4 +70,8 @@ h1, h2, h3{
 }
 .hover:hover{
     box-shadow: 0 0 40px 2px var(--secondary);
+}
+.btn-large {
+    font-size: var(--button-large) !important;
+    padding: var(--spacing-sm) var(--spacing-m);
 }

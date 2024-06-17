@@ -8,6 +8,7 @@ import { eventbus } from '@/components/Eventbus.js';
 import { elapsedTime, startTime, startTiming } from "@/views/BoulderingSession.vue"; // Importing timing related variables and functions
 import { RouterLink } from "vue-router";
 import {baseURL} from "@/config.js";
+import HeightToggleButton from "@/components/HeightToggleButton.vue";
 // Variables and reactive references
 const showFixedPositionButton = ref(true); // Flag to show/hide fixed position button
 const oldPosition = ref({}); // Object to store previous position
@@ -223,6 +224,7 @@ onMounted(async () => {
     <!-- Canvas component -->
     <Canvas :show-fixed-position-button="showFixedPositionButton"></Canvas>
 
+    <HeightToggleButton @toggle-height-bar="toggleHeightBar"></HeightToggleButton>
     <!-- Action buttons -->
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <!-- Button to confirm stickman position -->

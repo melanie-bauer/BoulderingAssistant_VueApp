@@ -25,7 +25,7 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  padding-bottom: 0 !important;
+  padding: var(--spacing-m);
 }
 
 

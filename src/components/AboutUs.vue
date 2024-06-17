@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-top: var(--spacing-m);
+  padding: var(--spacing-m);
 }
 
 img, svg {
@@ -88,7 +88,8 @@ img, svg {
 
 .image-wrapper {
   text-align: center;
-  height: 60vh;
+  max-height: calc(var(--vh, 1vh) * 60);
+  max-width: 80vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,9 +97,9 @@ img, svg {
 }
 
 .main-image {
-  min-height: 50vh;
+  min-height: 40vh;
   max-height: 60vh;
-  max-width: 80%;
+  max-width: 50vw;
   margin: 0 20px;
 }
 

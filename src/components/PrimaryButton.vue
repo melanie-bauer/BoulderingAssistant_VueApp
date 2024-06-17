@@ -19,7 +19,6 @@ export default {
     width: {
       type: [Number, String],
       required: false,
-      default: 'auto'
     },
     fontSize: {
       type: [Number, String],

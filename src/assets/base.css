@@ -27,7 +27,7 @@
   --header-sm: 20px;
   --label-r: 14px;
   --button-large: 24px;
-  --button-radius: 12px;
+  --button-radius: 10px;
 
   --vh: 1;
 
@@ -74,6 +74,7 @@
     --header-sm: 24px;
     --label-r: 16px;
     --button-large: 32px;
+    --button-radius: 12px;
   }
 }
 
@@ -87,6 +88,7 @@
     --header-sm: 36px;
     --label-r: 18px;
     --button-large: 36px;
+    --button-radius: 14px;
   }
 }
 
@@ -100,18 +102,20 @@
     --header-sm: 40px;
     --label-r: 20px;
     --button-large: 48px;
+    --button-radius: 16px;
   }
 }
 
 @media(min-width: 1200px) {
   :root {
     --font-size-base: 32px;
-    --display-xl: 100px;
-    --display-r: 88px;
-    --header-xl: 76px;
-    --header-r: 64px;
-    --header-sm: 52px;
+    --display-xl: 84px;
+    --display-r: 76px;
+    --header-xl: 64px;
+    --header-r: 52px;
+    --header-sm: 46px;
     --label-r: 24px;
     --button-large: 56px;
+    --button-radius: 18px;
   }
 }

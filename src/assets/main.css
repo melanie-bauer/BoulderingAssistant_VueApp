@@ -40,6 +40,7 @@ h1, h2, h3{
 }
 .btn{
     padding: 3px 10px 1px 9px !important;
+    border-radius: var(--button-radius) !important;
 }
 .btn-primary {
     --bs-btn-color: #fff !important;

@@ -4,8 +4,8 @@ import Footer from "../components/Footer.vue";
 </script>
 
 <template>
-    <footer class="footer">
-    <div class="footer-content">
+    <footer class="footer label">
+    <div class="footer-content text">
         <p>&copy; 2024 Bouldering Assistant. All rights reserved.</p>
         <p><a href="/impressum">Impressum</a></p>
     </div>

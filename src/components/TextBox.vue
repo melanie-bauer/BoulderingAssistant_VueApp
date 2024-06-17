@@ -11,7 +11,7 @@ export default{
 </script>
 
 <template>
-  <div class="box large-mb hover">
+  <div class="box medium-mb hover">
     <h4 class="colored-bot-b">{{title}}</h4>
     <div id="text-container" class="text">
       <slot ></slot>
@@ -28,6 +28,7 @@ export default{
 .colored-bot-b {
   padding-bottom: 5px;
   border-bottom: 1.5px var(--primary) solid;
+  font-weight: var(--font-weight-heading) !important;
 }
 .box{
   min-width: 90%;
@@ -38,11 +39,11 @@ export default{
 }
 
 
-@media(min-width: 769px)
+@media(min-width: 992px)
 {
   .box{
     min-width: auto;
-    margin: 0 20px 0 20px;
+    margin: 38px 0;
   }
 }
 </style>

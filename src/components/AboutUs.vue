@@ -8,7 +8,7 @@ import maximilianImage from '@/assets/images/Maximilian_Neumayer.jpg';
 const names = ["Melanie Bauer", "Elysee Mbala", "Jacob Mayrwöger", "Maximilian Neumayer"];
 const images = [melanieImage, mbalaImage, jacobImage, maximilianImage];
 const index = ref(0);
-const isCarousel = ref(window.innerWidth < 992);
+const isCarousel = ref(window.innerWidth < 1200);
 
 const next = () => {
   index.value = (index.value + 1) % names.length;
@@ -19,7 +19,7 @@ const prev = () => {
 };
 
 const handleResize = () => {
-  isCarousel.value = window.innerWidth < 992;
+  isCarousel.value = window.innerWidth < 1200;
 };
 
 onMounted(() => {
@@ -31,8 +31,8 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
 </script>
-<template>
 
+<template>
   <div class="container">
     <div class="row small-mb">
       <h1 class="text-align-center">About Us</h1>
@@ -52,6 +52,8 @@ onBeforeUnmount(() => {
     <div v-else class="grid-layout">
       <div v-for="(img, i) in images" :key="i" class="grid-item">
         <img :src="img" :alt="names[i]" class="grid-image img-fluid">
+        </div>
+      <div v-for="(img, i) in images" :key="i" class="grid-item align-self-start">
         <h4 class="caption">{{ names[i] }}</h4>
       </div>
     </div>
@@ -59,13 +61,16 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.align-self-start{
+  align-self: start;
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-top: 35px;
+  margin-top: var(--spacing-m);
 }
 
 img, svg {
@@ -99,7 +104,7 @@ img, svg {
 
 .caption {
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 12px; /* Smaller text size */
 }
 
 .arrow {
@@ -133,8 +138,10 @@ img, svg {
   display: grid;
   gap: 10px;
   width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  justify-items: center;
+  align-items: end; /* Align items to the bottom */
 }
-
 
 .grid-item {
   display: flex;
@@ -143,15 +150,23 @@ img, svg {
 }
 
 .grid-image {
-  min-width: 30vw;
-  max-width: 30vw;
+  width: 100%; /* Ensure images take full width */
+  max-width: 15vw;
+}
+
+.caption {
+  font-size: 14px; /* Smaller text size */
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .grid-image {
+    max-width: 15vw; /* Adjusted for larger screens */
+  }
 }
 
 @media (min-width: 992px) {
-  .grid-layout {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .caption{
+  .caption {
     margin: 20px 0 30px 0;
   }
 }
@@ -161,13 +176,17 @@ img, svg {
     grid-template-columns: repeat(4, 1fr);
     margin-top: 20px;
   }
-  .grid-image{
-    min-width: 20vw;
-    max-width: 20vw;
+  .grid-image {
+    max-width: 18vw; /* Adjusted for larger screens */
   }
-  .grid-item{
-    display: flex;
-    justify-content: center;
+  .caption {
+    margin: 10px 0 20px 0;
+  }
+}
+
+@media (min-width: 1500px) {
+  .grid-image {
+    max-width: 14vw; /* Adjusted for larger screens */
   }
 }
 </style>

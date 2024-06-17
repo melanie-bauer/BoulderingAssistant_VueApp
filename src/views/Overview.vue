@@ -113,7 +113,7 @@ onMounted(async () => {
     <div class="padding">
       <h4>Current climbing Height:</h4>
       <!-- Display the current climbing height -->
-      <p v-if="currentHeight" class="h4">{{ currentHeight }} cm</p>
+      <p v-if="currentHeight" class="h4">{{ currentHeight }}</p>
       <p v-else class="h4">0.0m</p>
     </div>
     <!-- Button to end the session -->

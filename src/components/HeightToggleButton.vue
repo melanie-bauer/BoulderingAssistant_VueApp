@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="height-toggle-button" @click="toggleHeightBar" :class="{ 'button-on-bar': heightBarVisible }">
-      <!-- You can add button label here if needed -->
+    <label>Height</label>
     </button>
     <transition name="slide">
       <div v-if="heightBarVisible" class="height-bar">
@@ -53,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+label{
+  color: #ffffff;
+}
 .height-toggle-button {
   position: absolute;
   right: 0.0rem;
@@ -86,7 +89,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease;
   padding: 20px 0;
 }
 
@@ -114,13 +117,12 @@ export default {
 
 .height-marker-active {
   box-shadow: 0 0 10px 3px var(--accent);
-  /* Glowing shadow effect */
 }
 
 .button-on-bar {
   right: 9.40rem;
   opacity: 1;
-  transition: right 0.01s ease;
+  transition: right 0.33s ease;
 }
 
 .slide-enter-active,
@@ -128,7 +130,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-.slide-enter,
+.slide-enter-from,
 .slide-leave-to {
   transform: translateX(100%);
   opacity: 0;

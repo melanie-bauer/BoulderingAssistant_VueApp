@@ -126,7 +126,7 @@ function drawStickman(points) {
   ctx.lineTo(points.RH.x, points.RH.y);
   ctx.moveTo(points.Shoulders.x, points.Shoulders.y);
   ctx.lineTo(points.Head.x, points.Head.y);
-  
+
   ctx.strokeStyle = 'white';
   ctx.stroke();
 }
@@ -280,8 +280,6 @@ function drawVideoFrame() {
   }
   requestAnimationFrame(drawVideoFrame);
 }
-
-
 </script>
 
 <template>

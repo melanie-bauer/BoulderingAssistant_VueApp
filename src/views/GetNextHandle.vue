@@ -60,7 +60,6 @@ async function confirmNextHandle()
       acc[point.id] = point;
       return acc;
     }, {}));
-    console.log(draggableLimbs)
     let value = draggableLimbs.value.map(item => item);
     if(value.length > 3 && personHeight.value > 0) {
       showFixedPositionButton.value = !showFixedPositionButton.value;

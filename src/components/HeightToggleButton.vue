@@ -59,7 +59,7 @@ label{
 .height-toggle-button {
   position: absolute;
   right: 0.0rem;
-  top: 19%;
+  top: 25%;
   transform: translateY(-50%);
   width: 25px;
   height: 77px;

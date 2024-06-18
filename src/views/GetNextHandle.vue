@@ -96,7 +96,22 @@ function GenerateOutput(limb)
   }
   output += `${roundToNearestFive(getDifferenceHolds(limb))} Zentimeter nach ${getClockDirection(limb)}`;
   let utterance = new SpeechSynthesisUtterance(output);
-  window.speechSynthesis.speak(utterance);
+
+  // Ensure the speech synthesis works on mobile devices
+  const speak = () => {
+    window.speechSynthesis.speak(utterance);
+    // Remove event listener after speaking
+    document.removeEventListener('click', speak);
+  };
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // Add a click event listener to start speech synthesis on user interaction
+    document.addEventListener('click', speak);
+    alert("Bitte tippen Sie auf den Bildschirm, um die Anweisungen zu hören."); // Inform the user to tap the screen
+  } else {
+    // Desktop or other devices
+    window.speechSynthesis.speak(utterance);
+  }
 }
 
 /**

@@ -22,12 +22,10 @@ export default defineComponent({
   </div>
 </template>
 
-
 <style scoped>
 .container {
   padding: var(--spacing-m);
 }
-
 
 
 </style>

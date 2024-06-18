@@ -96,7 +96,7 @@ label{
 .height-markers {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 3rem;
   align-items: center;
   width: 70%;
 }

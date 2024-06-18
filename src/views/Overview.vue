@@ -149,7 +149,7 @@ onMounted(async () => {
    width: 100vw;
   height: calc(var(--vh, 1vh) * 100);
   padding-bottom: 40px;
-  padding-top: 25vh;
+  padding-top: 20vh;
 }
 
 video {

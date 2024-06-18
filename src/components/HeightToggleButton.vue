@@ -47,7 +47,21 @@ export default {
       } catch (error) {
         console.error('Error updating climbing height:', error);
       }
+    },
+    async fetchCurrentHeight() {
+      try {
+        const response = await fetch(`${baseURL}/climbingHeight`);
+        const data = await response.json();
+        if (data && data !== '0.0m') {
+          this.clickedHeight = data;
+        }
+      } catch (error) {
+        console.error('Error fetching current height:', error);
+      }
     }
+  },
+  mounted() {
+    this.fetchCurrentHeight();
   }
 };
 </script>

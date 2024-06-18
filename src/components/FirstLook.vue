@@ -102,7 +102,9 @@ const hideOverlayMessage = () => {
 
 .button {
   margin: var(--spacing-xl) 0 var(--spacing-m) 0;
+  height: fit-content;
 }
+
 
 /* Light mode gradient */
 @media (prefers-color-scheme: light) {
@@ -119,7 +121,6 @@ const hideOverlayMessage = () => {
 
   .button {
     margin: calc(var(--vh, 1vh) * 25) 0 var(--spacing-xl) 0;
-    height: calc(var(--vh, 1vh) * 10);
   }
 }
 </style>

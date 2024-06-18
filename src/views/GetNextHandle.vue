@@ -96,7 +96,7 @@ function GenerateOutput(limb)
   }
   output += `${roundToNearestFive(getDifferenceHolds(limb))} Zentimeter nach ${getClockDirection(limb)}`;
   let utterance = new SpeechSynthesisUtterance(output);
-  
+
   // Ensure the speech synthesis works on mobile devices
   const speak = () => {
     window.speechSynthesis.speak(utterance);

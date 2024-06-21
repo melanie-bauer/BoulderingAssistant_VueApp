@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import PrimaryButton from "@/components/PrimaryButton.vue";
+import Overlay from "@/components/Overlay.vue";
 
 // State to manage device type and overlay visibility
 const isPhone = ref(false);
 const showOverlay = ref(false);
-
+const overlayMessage = ref("You can't start a session as long as you are not on a phone.");
 // Check device type on component mount
 onMounted(() => {
   isAPhone();
@@ -40,12 +41,12 @@ const hideOverlayMessage = () => {
     </div>
   </div>
   <!-- Overlay -->
-  <div v-if="showOverlay" class="overlay">
-    <div class="overlay-content">
-      <p class="h4">You can't start a session as long as you are not on a phone.</p>
-      <button class="ok-button btn btn-primary" @click="hideOverlayMessage">OK</button>
-    </div>
-  </div>
+  <Overlay
+      v-if="showOverlay"
+      :show="showOverlay"
+      :message="overlayMessage"
+      @close-overlay="hideOverlayMessage"
+  />
 </template>
 
 <style scoped>
@@ -58,33 +59,6 @@ const hideOverlayMessage = () => {
   filter: blur(5px);
   z-index: 10;
   min-height: calc(var(--vh, 1vh) * 100);
-}
-
-/* Overlay styling */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10% ;
-  z-index: 1000;
-}
-
-.overlay-content {
-  background: white;
-  padding: var(--spacing-xl);
-  border-radius: var(--button-radius);
-  text-align: center;
-  color: black;
-}
-
-.ok-button {
-  margin-top: var(--spacing-m);
 }
 
 .container {

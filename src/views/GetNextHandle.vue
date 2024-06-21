@@ -9,12 +9,14 @@ import { elapsedTime, startTime, startTiming } from "@/views/BoulderingSession.v
 import { RouterLink } from "vue-router";
 import {baseURL} from "@/config.js";
 import HeightToggleButton from "@/components/HeightToggleButton.vue";
+import Overlay from "@/components/Overlay.vue";
 // Variables and reactive references
 const showFixedPositionButton = ref(true); // Flag to show/hide fixed position button
 const oldPosition = ref({}); // Object to store previous position
 const newPosition = ref({}); // Object to store new position
 const personHeight = ref(); // Reference to store person's height
-
+const showOverlay = ref(false);
+const overlayMessage = ref("Bitte tippen Sie auf den Bildschirm, um die Anweisungen zu hören.")
 // Methods
 
 /**
@@ -106,7 +108,7 @@ function GenerateOutput(limb)
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     // Add a click event listener to start speech synthesis on user interaction
     document.addEventListener('click', speak);
-    alert("Bitte tippen Sie auf den Bildschirm, um die Anweisungen zu hören."); // Inform the user to tap the screen
+    showOverlay.value = true;
   } else {
     // Desktop or other devices
     window.speechSynthesis.speak(utterance);
@@ -213,9 +215,20 @@ onMounted(async () => {
     console.error('Error updating personHeight:', error);
   }
 })
+
+const hideOverlayMessage = () => {
+  showOverlay.value = false;
+};
 </script>
 
 <template>
+  <!-- Overlay -->
+  <Overlay
+      v-if="showOverlay"
+      :show="showOverlay"
+      :message="overlayMessage"
+      @close-overlay="hideOverlayMessage"
+  />
   <!-- Main container -->
   <div class="container d-flex flex-column justify-content-between">
     <!-- Timer display -->

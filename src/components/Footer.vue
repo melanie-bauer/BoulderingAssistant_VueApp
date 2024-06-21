@@ -1,13 +1,20 @@
 <script>
 import { ref } from 'vue'
 import Footer from "../components/Footer.vue";
+import {defineComponent} from "vue";
+import {RouterLink} from "vue-router";
+
+export default defineComponent({
+  components: {RouterLink}
+})
+
 </script>
 
 <template>
     <footer class="footer label">
     <div class="footer-content text">
         <p>&copy; 2024 Bouldering Assistant. All rights reserved.</p>
-        <p><a href="/impressum">Impressum</a></p>
+        <p><RouterLink to="/impressum">Impressum</RouterLink></p>
     </div>
 </footer>
 </template>

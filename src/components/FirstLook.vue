@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import PrimaryButton from "@/components/PrimaryButton.vue";
-import heightToggleButton from "@/components/HeightToggleButton.vue";
 
 // State to manage device type and overlay visibility
 const isPhone = ref(false);

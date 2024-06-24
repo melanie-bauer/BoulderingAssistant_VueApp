@@ -148,7 +148,7 @@ async function handleButtonClick() {
       </RouterLink>
     </div>
     <div class="text-center mt">
-      <label class="form-label text">Körpergröße der Person eingeben</label>
+      <label class="form-label text">Körpergröße eingeben</label>
       <!-- Height input field -->
       <input v-model="personHeight" aria-label=".form-control-lg example"
              class="form-control form-control-lg input my-3"
@@ -179,6 +179,9 @@ async function handleButtonClick() {
 </template>
 
 <style scoped>
+.text-danger{
+  font-size: 13px;
+}
 .input:focus {
   outline: none;
   box-shadow: 0 0 15px 5px var(--primary);

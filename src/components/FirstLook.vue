@@ -6,7 +6,7 @@ import Overlay from "@/components/Overlay.vue";
 // State to manage device type and overlay visibility
 const isPhone = ref(false);
 const showOverlay = ref(false);
-const overlayMessage = ref("You can't start a session as long as you are not on a phone.");
+const overlayMessage = ref("Du kannst keine Sitzung starten, solange du nicht auf einem Smartphone bist.");
 // Check device type on component mount
 onMounted(() => {
   isAPhone();
@@ -34,10 +34,10 @@ const hideOverlayMessage = () => {
 <template>
   <div :class="{ 'blur': showOverlay }">
     <div class="gradient container d-flex flex-column">
-      <h1 class="col-sm-12 header-xl">Bouldering Assistant</h1>
-      <h4 class="col-11">Your digital assistant to help visually impaired people with bouldering.</h4>
-      <button v-if="!isPhone" class="button col-8 btn-large btn btn-primary" @click="showOverlayMessage">Get started <b>NOW</b></button>
-      <PrimaryButton v-else class="button col-8 btn-large" to="/boulderingSession">Get started <b>NOW</b></PrimaryButton>
+      <h1 class="col-sm-12 header-xl">Boulder Assistent</h1>
+      <h4 class="col-11">Ihr digitaler Assistent, der sehbehinderte Menschen beim Bouldern hilft.</h4>
+      <button v-if="!isPhone" class="button col-8 btn-large btn btn-primary" @click="showOverlayMessage">Starte <b>JETZT</b></button>
+      <PrimaryButton v-else class="button col-8 btn-large" to="/boulderingSession">Starte <b>JETZT</b></PrimaryButton>
     </div>
   </div>
   <!-- Overlay -->

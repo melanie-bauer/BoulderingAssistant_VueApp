@@ -92,33 +92,33 @@ onMounted(async () => {
   <div class="absolute-container overlay align-items-center">
     <RouterLink class="button d-flex align-items-center" to="/connectRaspi">
       <img alt="back arrow" class="img" src="@/assets/images/back-arrow.png">
-      Continue
+      Zurück
     </RouterLink>
   </div>
   <!-- Container for the session information -->
   <div class="container d-flex flex-column justify-content-between">
     <!-- Session information -->
     <div class="padding">
-      <h4>Time in current Session:</h4>
+      <h4>Zeit in der aktuellen Session:</h4>
       <!-- Display the elapsed time -->
       <p v-if="elapsedTime" class="h4">{{ elapsedTime }}</p>
       <p v-else class="h4">00:00</p>
     </div>
     <div class="padding">
-      <h4>Height of climbing Person:</h4>
+      <h4>Körpergröße der kletternden Person:</h4>
       <!-- Display the person's height -->
       <p v-if="personHeight" class="h4">{{ personHeight }} cm</p>
       <p v-else class="h4">0 cm</p>
     </div>
     <div class="padding">
-      <h4>Current climbing Height:</h4>
+      <h4>Momentane Kletterhöhe:</h4>
       <!-- Display the current climbing height -->
       <p v-if="currentHeight" class="h4">{{ currentHeight }}</p>
       <p v-else class="h4">0.0m</p>
     </div>
     <!-- Button to end the session -->
     <div class="text-center row d-flex justify-content-center align-items-center padding">
-      <PrimaryButton class="mx-1" font-size="30px" to="/" width="100%" @click="endSession">End Session</PrimaryButton>
+      <PrimaryButton class="mx-1" font-size="30px" to="/" width="100%" @click="endSession">Session beenden</PrimaryButton>
     </div>
   </div>
 </template>

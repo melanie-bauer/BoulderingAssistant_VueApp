@@ -63,7 +63,7 @@ async function confirmNextHandle()
       return acc;
     }, {}));
     let value = draggableLimbs.value.map(item => item);
-    if(value.length > 3 && personHeight.value > 0) {
+    if(value.length > 3 && personHeight.value > 0 && oldPosition[value[1]]) {
       showFixedPositionButton.value = !showFixedPositionButton.value;
       GenerateOutput(value[1]);
       draggableLimbs.value = ['Head', 'Shoulder', 'Hip'];
@@ -71,7 +71,24 @@ async function confirmNextHandle()
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-  
+}
+
+function LimbMoved(limb)
+{
+  switch(limb) {
+    case 'LH':
+      return oldPosition.LH != newPosition.LH;
+      break;
+    case 'RH':
+      return oldPosition.RH != newPosition.RH;
+      break;
+    case 'LF':
+      return oldPosition.LF != newPosition.LF;
+      break;
+    case 'RF':
+      return oldPosition.RF != newPosition.RF;
+      break;
+  }
 }
 /**
  * Generate speech output based on the limb movement
@@ -257,12 +274,12 @@ const hideOverlayMessage = () => {
     <div class="text-center row d-flex justify-content-center align-items-center padding">
       <!-- Button to confirm stickman position -->
       <PrimaryButton v-if="showFixedPositionButton" id="confirmStickman" class="overlay" fontSize="30px" to="/connectRaspi" width="100%" @click="confirmPosition">
-        confirm Stickman-Position
+       Position bestätigen
       </PrimaryButton>
 
       <!-- Button to confirm next handle position -->
       <PrimaryButton v-if="!showFixedPositionButton" id="confirmNextHandle" class="overlay mx-1" fontSize="30px" to="/connectRaspi" width="100%" @click="confirmNextHandle">
-        confirm next Handle
+        Griff auswählen
       </PrimaryButton>
     </div>
   </div>

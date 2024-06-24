@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="height-toggle-button" @click="toggleHeightBar" :class="{ 'button-on-bar': heightBarVisible }">
-    <label>Height</label>
+    <label>Kletterhöhe</label>
     </button>
     <transition name="slide">
       <div v-if="heightBarVisible" class="height-bar">

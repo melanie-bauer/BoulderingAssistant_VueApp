@@ -148,14 +148,14 @@ async function handleButtonClick() {
       </RouterLink>
     </div>
     <div class="text-center mt">
-      <label class="form-label text">Enter Person's Height</label>
+      <label class="form-label text">Körpergröße der Person eingeben</label>
       <!-- Height input field -->
       <input v-model="personHeight" aria-label=".form-control-lg example"
              class="form-control form-control-lg input my-3"
-             placeholder="Height in cm"
+             placeholder="Größe in cm"
              type="text" @input="validateHeightInput">
       <!-- Error message for invalid height -->
-      <p v-if="showError" class="text-danger mt-1">Please enter a number between 30 and 230.</p>
+      <p v-if="showError" class="text-danger mt-1">Bitte geben Sie eine Zahl zwischen 30 und 230 ein.</p>
     </div>
     <div class="text-center">
       <!-- Start session button -->
@@ -165,14 +165,14 @@ async function handleButtonClick() {
           class="btn btn-primary"
           to="/connectRaspi"
           @click="handleButtonClick">
-        Start Session
+        Session starten
       </RouterLink>
       <!-- Disabled start session button when there's an error -->
       <button
           v-else
           :style="{ width: '100%', fontSize: '30px', opacity: 0.5 }"
           class="btn btn-primary">
-        Start Session
+        Session starten
       </button>
     </div>
   </div>

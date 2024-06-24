@@ -75,8 +75,8 @@ label{
   right: 0.0rem;
   top: 25%;
   transform: translateY(-50%);
-  width: 25px;
-  height: 77px;
+  width: 27px;
+  height: 91px;
   background-color: var(--secondary);
   color: #000000;
   border: none;
